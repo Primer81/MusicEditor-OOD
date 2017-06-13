@@ -128,6 +128,7 @@ public class MusicEditorModel implements IMusicEditorModel {
       throw new IllegalArgumentException("Error: Cannot remove null note.");
     }
     if (music.contains(n)) {
+      this.curBeat = 0;
       music.remove(n);
     }
     else {
@@ -233,19 +234,19 @@ public class MusicEditorModel implements IMusicEditorModel {
    * @return The first or last note
    */
   private Note firstOrLast(boolean first) {
-    if (music.size() == 0) {
+    if (this.music.isEmpty()) {
       throw new IllegalStateException("Error: Music has no notes.");
     }
-    Note n = music.get(0);
-    for (int i = 0; i < music.size(); i++) {
-      int current = music.get(i).compare(n);
+    Note n = this.music.get(0);
+    for (int i = 0; i < this.music.size(); i++) {
+      int current = this.music.get(i).compare(n);
       if (first) {
         if (current < 0) {
-          n = music.get(i);
+          n = this.music.get(i);
         }
       } else {
         if (current > 0) {
-          n = music.get(i);
+          n = this.music.get(i);
         }
       }
     }
@@ -254,17 +255,63 @@ public class MusicEditorModel implements IMusicEditorModel {
 
   @Override
   public int getSongLength() {
-    if (music.isEmpty()) {
+    if (this.music.isEmpty()) {
       return 0;
     }
     int length = 0;
-    List<Note> music = this.music;
-    for (Note n : music) {
+    for (Note n : this.music) {
       if (n.getStart() + n.getDuration() >= length) {
         length = n.getStart() + n.getDuration();
       }
     }
     return length;
+  }
+
+  @Override
+  public void merge(List<Note> music) throws IllegalArgumentException {
+    if (!this.validSheet(music)) {
+      throw new IllegalArgumentException("Error: Invalid sheet given to merge method.");
+    }
+    for (Note n : music) {
+      this.addNote(n);
+    }
+  }
+
+  @Override
+  public void merge(List<Note> music, int beatNum) throws IllegalArgumentException {
+    if (!this.validSheet(music)) {
+      throw new IllegalArgumentException("Error: Invalid sheet given to merge method.");
+    }
+    if (beatNum >= 0) {
+      for (Note n : music) {
+        n.setStart(n.getStart() + beatNum);
+        this.addNote(n);
+      }
+    } else {
+      for (Note n : this.music) {
+        n.setStart(n.getStart() + Math.abs(beatNum));
+      }
+      for (Note n : music) {
+        this.addNote(n);
+      }
+    }
+  }
+
+  @Override
+  public void append(List<Note> music) throws IllegalArgumentException {
+    if (!this.validSheet(music)) {
+      throw new IllegalArgumentException("Error: Invalid sheet given to append method.");
+    }
+    int lastBeat;
+    if (this.music.size() > 0) {
+      lastBeat = this.getSongLength();
+    } else {
+      lastBeat = 0;
+    }
+    for (Note n : music) {
+      n.setStart(n.getStart() + lastBeat);
+      this.addNote(n);
+    }
   }
 
   @Override
@@ -288,7 +335,7 @@ public class MusicEditorModel implements IMusicEditorModel {
   @Override
   public void nextBeat() throws IllegalStateException {
     if (!this.hasNext()) {
-      throw new IllegalStateException("No next beat.");
+      throw new IllegalStateException("Error: No next beat.");
     }
     this.curBeat += 1;
   }
@@ -296,7 +343,7 @@ public class MusicEditorModel implements IMusicEditorModel {
   @Override
   public void prevBeat() throws IllegalStateException {
     if (!this.hasPrev()) {
-      throw new IllegalStateException("No previous beat.");
+      throw new IllegalStateException("Error: No previous beat.");
     }
     this.curBeat -= 1;
   }
@@ -304,7 +351,7 @@ public class MusicEditorModel implements IMusicEditorModel {
   @Override
   public List<Note> playBeat() throws IllegalStateException {
     if (this.music.size() == 0) {
-      throw new IllegalStateException("No notes have been added to the editor.");
+      throw new IllegalStateException("Error: No notes have been added to the editor.");
     }
     ArrayList<Note> curBeats = new ArrayList<>();
     for (Note n: this.music) {
@@ -320,10 +367,10 @@ public class MusicEditorModel implements IMusicEditorModel {
   @Override
   public void setBeat(int curBeat) throws IllegalArgumentException, IllegalStateException {
     if (this.music.isEmpty()) {
-      throw new IllegalStateException("No beats exist.");
+      throw new IllegalStateException("Error: No beats exist.");
     }
     if (curBeat < 0 || curBeat > this.getSongLength() - 1) {
-      throw new IllegalArgumentException("Cannot set the current beat to the given value.");
+      throw new IllegalArgumentException("Error: Cannot set the current beat to the given value.");
     }
     this.curBeat = curBeat;
   }
@@ -331,7 +378,7 @@ public class MusicEditorModel implements IMusicEditorModel {
   @Override
   public int getBeat() throws IllegalStateException {
     if (this.music.isEmpty()) {
-      throw new IllegalStateException("No beats exist.");
+      throw new IllegalStateException("Error: No beats exist.");
     }
     return this.curBeat;
   }

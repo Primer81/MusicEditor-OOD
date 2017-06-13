@@ -71,6 +71,55 @@ public interface IMusicEditorModel {
   int getSongLength();
 
   /**
+   * Takes in an arrayList of music notes and merges them with the current sheet. All notes will
+   * retain their timings. Therefore, both pieces of music will start at the same time after
+   * they are merged. Does not allow any merges that would result in any notes of same octave
+   * and pitch to have overlapping durations.
+   * <p>
+   * Throws an exception if the given list of notes is invalid.
+   * </p>
+   *
+   * @param music the piece of music to be merged with the current sheet
+   * @throws IllegalArgumentException if a note with the same octave and pitch already exists
+   *         within the duration or beatLength of any note in the music sheet being added
+   */
+  void merge(List<Note> music) throws IllegalArgumentException;
+
+  /**
+   * Takes in an arrayList of music notes and merges them with the current sheet. All notes being
+   * added will have updated timings according to the beatNum parameter. Therefore, the music being
+   * added will only begin to play at the specified beatNum. Does not allow any merges that would
+   * result in any notes of same octave and pitch to have overlapping durations. If the beatNum
+   * parameter is negative, then the absolute value of the beatNum will be added to the timings of
+   * all notes in the current piece of music instead of the one being merged. In this way, a piece
+   * of music being merged may begin to play before the current sheet.
+   * <p>
+   * Throws an exception if the given list of notes is invalid.
+   * </p>
+   *
+   * @param music the piece of music to be merged with the current sheet
+   * @param beatNum the beat at which the music being added will begin to play
+   * @throws IllegalArgumentException if a note with the same octave and pitch already exists
+   *     within the duration or beatLength of any note in the music sheet being added
+   * @throws IllegalArgumentException if the beatNum is is negative
+   * @throws IllegalArgumentException if the given list of notes is invalid
+   */
+  void merge(List<Note> music, int beatNum) throws IllegalArgumentException;
+
+  /**
+   * Takes in an arrayList of music notes and appends them to the end of the current sheet.
+   * All notes being appended will have their timings updated by adding the timing of the last
+   * note played in the current piece of music to the notes being added.
+   * <p>
+   * Throws an exception if the given list of notes is invalid.
+   * </p>
+   *
+   * @param music the piece of music to be appended to the current sheet
+   * @throws IllegalArgumentException if the given list of notes is invalid
+   */
+  void append(List<Note> music) throws IllegalArgumentException;
+
+  /**
    * Returns true if there is a next beat in this piece of music; false otherwise.
    *
    * @return whether or not there is a next beat
