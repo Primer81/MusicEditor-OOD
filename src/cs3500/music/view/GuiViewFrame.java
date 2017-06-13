@@ -20,7 +20,7 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
   private IMusicEditorModel model;
 
   /**
-   * Creates new GuiView
+   * Creates new GuiView.
    */
   public GuiViewFrame(IMusicEditorModel model) {
     this.displayPanel = new ConcreteGuiViewPanel(model);
@@ -67,7 +67,7 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
   }
 
   public void updateRed(int num) {
-    concrete.updateRedLine(num);
+    //concrete.updateRedLine(num);
     //concrete.updateScroll(scrollPane.getVerticalScrollBar().getValue());
     if (redLineBeat() % 20 == 0) {
       autoScroll(concrete.getRedLineLocation() - 45);

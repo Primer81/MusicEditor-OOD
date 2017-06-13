@@ -23,8 +23,8 @@ public class Note {
    * @param volume The volume of this note
    */
   public Note(int duration, int octave, int start, Pitch pitch, int instrument, int volume) {
-    if (duration < 0) {
-      throw new IllegalArgumentException("Error: Note duration cannot be less than zero.");
+    if (duration < 1) {
+      throw new IllegalArgumentException("Error: Note duration cannot be less than one.");
     }
     if (octave < 0) {
       throw new IllegalArgumentException("Error: Octave cannot be less than zero.");
@@ -119,6 +119,7 @@ public class Note {
 
   @Override
   public int hashCode() {
+
     return this.duration * 10 + this.octave * 10 + this.start * 10;
   }
 

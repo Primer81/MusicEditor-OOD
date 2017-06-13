@@ -18,6 +18,7 @@ public class MusicEditorModel implements IMusicEditorModel {
    */
   public MusicEditorModel() {
     this.music = new ArrayList<>();
+    this.tempo = 1;
   }
 
   /**
@@ -117,7 +118,7 @@ public class MusicEditorModel implements IMusicEditorModel {
 
   @Override
   public List<Note> getMusic() {
-    return this.music;
+    return new ArrayList<>(this.music);
   }
 
   @Override
