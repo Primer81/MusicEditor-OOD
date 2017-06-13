@@ -113,13 +113,10 @@ public class MusicEditorModel implements IMusicEditorModel {
     if (n == null) {
       throw new IllegalArgumentException("Error: Cannot add null note.");
     }
-    if (this.music.contains(n)) {
-      throw new IllegalArgumentException("Error: This note already exists.");
-    }
     if (!this.noOverlap(n, this.music)) {
       throw new IllegalArgumentException("Error: This note overlaps with an existing note.");
     }
-    music.add(n);
+    this.music.add(n);
   }
 
   @Override
@@ -142,14 +139,14 @@ public class MusicEditorModel implements IMusicEditorModel {
       return "";
     }
     int length = getSongLength();
-    StringBuilder sb = new StringBuilder(String.format("%" + Integer.toString(length).length()
-            + "s", ""));
+    StringBuilder sb = new StringBuilder(
+        String.format("%" + Integer.toString(length).length() + "s", ""));
     ArrayList<String> range = this.getRange();
     for (int i = 0; i < range.size(); i++) {
-      sb.append(String.format("%5s", String.format("%-2s", range.get(i))));
+      sb.append(String.format("%5s", String.format("%-4s", String.format("%3s", range.get(i)))));
     }
-    for (int i = 0; i <= length; i++) {
-      sb.append("\n" + buildRow(i, range));
+    for (int i = 0; i < length; i++) {
+      sb.append("\n" + this.buildRow(i, range));
     }
     return sb.toString();
   }
@@ -165,7 +162,7 @@ public class MusicEditorModel implements IMusicEditorModel {
     boolean isNoteHead;
     boolean isNoteBody;
     String currBeat;
-    String row = String.format("%" + (Integer.toString(getSongLength()).length() + 1) + "s",
+    String row = String.format("%" + (Integer.toString(this.getSongLength()).length()) + "s",
             current);
     for (int i = 0; i < noteRange.size(); i++) {
       currBeat = "     ";
@@ -201,9 +198,9 @@ public class MusicEditorModel implements IMusicEditorModel {
     boolean greaterThanFirst;
     boolean lessThanLast;
 
-    Note firstNote = firstOrLast(true);
+    Note firstNote = this.firstOrLast(true);
     int firstOctave = firstNote.getOctave();
-    Note lastNote = firstOrLast(false);
+    Note lastNote = this.firstOrLast(false);
     int lastOctave = lastNote.getOctave();
     ArrayList<String> range = new ArrayList<>();
 
