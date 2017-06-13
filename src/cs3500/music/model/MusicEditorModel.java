@@ -8,7 +8,8 @@ import cs3500.music.util.CompositionBuilder;
 /**
  * An implementation of the IMusicEditorModel interface. A sheet of music
  * in this class is represented by a List of Note objects. Each Note object is aware of
- * its timings, durations, octaves, pitches, instrument and volume.
+ * its timings, durations, octaves, pitches, instrument and volume. This class enforces that
+ * notes of same octave, pitch, and instrument have no overlapping durations.
  * <p>
  * UPDATE: This music editor now implements the hasNext, hasPrev, nextBeat, prevBeat, playBeat,
  * setBeat, and getBeat methods. As a result, a new field called 'curBeat' has been added to
@@ -31,14 +32,20 @@ public class MusicEditorModel implements IMusicEditorModel {
   }
 
   /**
-   * Constructor for a MusicEditorModel that sets tempo for MIDI playback.
+   * Constructor for a MusicEditorModel that sets tempo for MIDI playback. Verifies that
+   * the given list of notes has no overlapping notes.
    *
    * @param notes The music of the model
    * @param tempo The tempo of the model
+   * @throws IllegalArgumentException if given null values, an invalid list of notes,
+   *         or negative values
    */
   public MusicEditorModel(List<Note> notes, int tempo) {
     if (notes == null) {
       throw new IllegalArgumentException("Error: Music cannot be null.");
+    }
+    if (!this.validSheet(notes)) {
+      throw new IllegalArgumentException("Error: Music cannot have overlapping notes.");
     }
     if (tempo < 0) {
       throw new IllegalArgumentException("Error: Tempo cannot be less than zero.");
@@ -48,13 +55,69 @@ public class MusicEditorModel implements IMusicEditorModel {
     this.curBeat = 0;
   }
 
+  /**
+   * UPDATE: This method is a modification on hw05.
+   * <p>
+   * Takes in an ArrayList of Note objects and checks to see if any notes of same octave, pitch,
+   * and instrument in that ArrayList have overlapping timings. Returns true if no overlaps;
+   * false otherwise. No parameters are modified by this method. Used by the constructor,
+   * the merge method, and the append method.
+   * </p>
+   *
+   * @param music the sheet to be validated
+   * @return whether the sheet is valid or not
+   */
+  private boolean validSheet(List<Note> music) {
+    ArrayList<Note> clone = new ArrayList<>(music);
+    for (Note n : music) {
+      clone.remove(n);
+      if (!this.noOverlap(n, clone)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * UPDATE: This method is a modification on hw05.
+   * <p>
+   * Returns true if the given note does not have an overlapping duration with any note of same
+   * pitch and octave in the given arrayList of notes. No parameters are modified by this method.
+   * Is used by the addNote method, and the validSheet protected method.
+   * </p>
+   *
+   * @param n     the note being checked
+   * @param music the music sheet being checked
+   * @return true if the given note does not overlap with any notes in the given sheet of music;
+   *         false otherwise
+   */
+  private boolean noOverlap(Note n, List<Note> music) {
+    for (Note c : music) {
+      if (n.getOctave() == c.getOctave()
+          && n.getPitch().equals(c.getPitch())
+          && n.getInstrument() == c.getInstrument()) {
+        int nStart = n.getStart();
+        int cStart = c.getStart();
+        if (nStart == cStart
+            || (nStart < cStart && nStart + n.getDuration() > cStart)
+            || (cStart < nStart && cStart + c.getDuration() > nStart)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   @Override
   public void addNote(Note n) {
     if (n == null) {
       throw new IllegalArgumentException("Error: Cannot add null note.");
     }
-    if (music.contains(n)) {
+    if (this.music.contains(n)) {
       throw new IllegalArgumentException("Error: This note already exists.");
+    }
+    if (!this.noOverlap(n, this.music)) {
+      throw new IllegalArgumentException("Error: This note overlaps with an existing note.");
     }
     music.add(n);
   }

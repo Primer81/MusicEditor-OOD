@@ -9,13 +9,21 @@ import java.util.List;
  * UPDATE: This interface now requires the implementation of the hasNext, hasPrev, hasBeat,
  * nextBeat, prevBeat, playBeat, setBeat, and getBeat methods. This is a modification on hw05.
  * </p>
+ * <p>
+ * UPDATE: The methods of this interface enforce that no note of same octave or pitch may
+ * have overlapping durations within the piece of music being worked on. This is a modification on
+ * hw05.
+ * </p>
  */
 public interface IMusicEditorModel {
 
   /**
-   * Adds the note to the music.
+   * Adds the given note to the music sheet. Does not allow notes of same octave and pitch
+   * to have overlapping durations or beatLengths.
    *
-   * @param n The note to be added.
+   * @param n the music note to be added
+   * @throws IllegalArgumentException if a note with the same octave, pitch, and instrument
+   *         already exists within the duration of the note being added
    */
   void addNote(Note n);
 
@@ -42,7 +50,7 @@ public interface IMusicEditorModel {
   String getState();
 
   /**
-   * Gets the music.
+   * Gets a copy of the list of all the notes in this music editor.
    *
    * @return The List representing the music.
    */
@@ -51,14 +59,14 @@ public interface IMusicEditorModel {
   /**
    * Gets the List of Strings signifying the musical range.
    *
-   * @return The range of the music.
+   * @return The range of the music
    */
   List<String> getRange();
 
   /**
-   * Returns the length of the song.
+   * Returns the length of the song in beats.
    *
-   * @return The length of the song.
+   * @return The length of the song in beats
    */
   int getSongLength();
 
