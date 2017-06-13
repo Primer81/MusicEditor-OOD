@@ -6,12 +6,20 @@ import java.util.List;
 import cs3500.music.util.CompositionBuilder;
 
 /**
- * Implementation of an IMusicEditorModel.
+ * An implementation of the IMusicEditorModel interface. A sheet of music
+ * in this class is represented by a List of Note objects. Each Note object is aware of
+ * its timings, durations, octaves, pitches, instrument and volume.
+ * <p>
+ * UPDATE: This music editor now implements the hasNext, hasPrev, nextBeat, prevBeat, playBeat,
+ * setBeat, and getBeat methods. As a result, a new field called 'curBeat' has been added to
+ * keep track of the current beat. This is a modification on hw05.
+ * </p>
  */
 public class MusicEditorModel implements IMusicEditorModel {
 
   private List<Note> music;
   private int tempo;
+  private int curBeat;
 
   /**
    * Default constructor for a MusicEditorModel.
@@ -19,6 +27,7 @@ public class MusicEditorModel implements IMusicEditorModel {
   public MusicEditorModel() {
     this.music = new ArrayList<>();
     this.tempo = 1;
+    this.curBeat = 0;
   }
 
   /**
@@ -36,6 +45,7 @@ public class MusicEditorModel implements IMusicEditorModel {
     }
     this.music = notes;
     this.tempo = tempo;
+    this.curBeat = 0;
   }
 
   @Override
@@ -192,6 +202,75 @@ public class MusicEditorModel implements IMusicEditorModel {
       }
     }
     return length;
+  }
+
+  @Override
+  public boolean hasNext() {
+    if (!this.music.isEmpty()) {
+      return this.curBeat < this.getSongLength() - 1;
+    }
+    return false;
+  }
+
+  @Override
+  public boolean hasPrev() {
+    return this.curBeat > 0;
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return this.music.isEmpty();
+  }
+
+  @Override
+  public void nextBeat() throws IllegalStateException {
+    if (!this.hasNext()) {
+      throw new IllegalStateException("No next beat.");
+    }
+    this.curBeat += 1;
+  }
+
+  @Override
+  public void prevBeat() throws IllegalStateException {
+    if (!this.hasPrev()) {
+      throw new IllegalStateException("No previous beat.");
+    }
+    this.curBeat -= 1;
+  }
+
+  @Override
+  public List<Note> playBeat() throws IllegalStateException {
+    if (this.music.size() == 0) {
+      throw new IllegalStateException("No notes have been added to the editor.");
+    }
+    ArrayList<Note> curBeats = new ArrayList<>();
+    for (Note n: this.music) {
+      if (n.getStart() == this.curBeat
+          || (n.getStart() < this.curBeat
+          && n.getStart() + n.getDuration() > this.curBeat)) {
+        curBeats.add(n);
+      }
+    }
+    return curBeats;
+  }
+
+  @Override
+  public void setBeat(int curBeat) throws IllegalArgumentException, IllegalStateException {
+    if (this.music.isEmpty()) {
+      throw new IllegalStateException("No beats exist.");
+    }
+    if (curBeat < 0 || curBeat > this.getSongLength() - 1) {
+      throw new IllegalArgumentException("Cannot set the current beat to the given value.");
+    }
+    this.curBeat = curBeat;
+  }
+
+  @Override
+  public int getBeat() throws IllegalStateException {
+    if (this.music.isEmpty()) {
+      throw new IllegalStateException("No beats exist.");
+    }
+    return this.curBeat;
   }
 
   /**
