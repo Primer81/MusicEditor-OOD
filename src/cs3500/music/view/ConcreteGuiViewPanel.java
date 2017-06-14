@@ -214,13 +214,13 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
     int keyCode = e.getKeyCode();
     switch (keyCode) {
       case KeyEvent.VK_RIGHT:
-        if (this.getRedLineBeat() < model.getSongLength() - 1) {
+        if (this.model.hasNext()) {
           this.redLineLoc += this.BEAT_WIDTH;
           this.model.nextBeat();
         }
         break;
       case KeyEvent.VK_LEFT:
-        if (this.getRedLineBeat() > 0) {
+        if (this.model.hasPrev()) {
           this.redLineLoc -= this.BEAT_WIDTH;
           this.model.prevBeat();
         }
