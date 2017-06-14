@@ -103,6 +103,18 @@ public class Note {
     return this.volume;
   }
 
+  /**
+   * Sets the starting beat of this note. Throws an exception if the given value is negative.
+   *
+   * @param start the new start value
+   */
+  public void setStart(int start) {
+    if (start < 0) {
+      throw new IllegalArgumentException("Error: Start value cannot be negative.");
+    }
+    this.start = start;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Note)) {
@@ -134,10 +146,6 @@ public class Note {
       return pitch.compareTo(n2.getPitch());
     }
     return octave - n2.getOctave();
-  }
-
-  public void setStart(int start) {
-    this.start = start;
   }
 
   @Override
