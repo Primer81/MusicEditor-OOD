@@ -9,11 +9,13 @@ import javax.swing.JPanel;
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 import cs3500.music.model.Pitch;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Class that renders everything for the GUI view.
  */
-public class ConcreteGuiViewPanel extends JPanel {
+public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
 
   private final int BEAT_WIDTH = 20;
   private final int NOTE_HEIGHT = 20;
@@ -31,6 +33,7 @@ public class ConcreteGuiViewPanel extends JPanel {
     super();
     this.model = model;
     this.redLineLoc = this.BEAT_WIDTH + this.SIDE_WIDTH + 5;
+    addKeyListener(this);
   }
 
   @Override
@@ -199,6 +202,47 @@ public class ConcreteGuiViewPanel extends JPanel {
    */
   public List<Note> getNotesAtRedLine() {
     return model.getNotesAtBeat((redLineLoc - 45) / 20);
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+    //  do nothing
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    int keyCode = e.getKeyCode();
+    switch (keyCode) {
+      case KeyEvent.VK_RIGHT:
+        if (getRedLineBeat() >= model.getSongLength()) {
+          // do nothing.
+        }
+        else {
+          redLineLoc = redLineLoc + 20;
+        }
+        break;
+      case KeyEvent.VK_LEFT:
+        if (getRedLineBeat() <= 0) {
+          // do nothing.
+        }
+        else {
+          redLineLoc = redLineLoc - 20;
+        }
+        break;
+      default:
+    }
+    repaint();
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+    // do nothing
+  }
+
+  @Override
+  public void addNotify() {
+    super.addNotify();
+    requestFocus();
   }
 
 }

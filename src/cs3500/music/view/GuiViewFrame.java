@@ -85,4 +85,6 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
   public int redLineBeat() {
     return concrete.getRedLineBeat();
   }
+
+
 }
