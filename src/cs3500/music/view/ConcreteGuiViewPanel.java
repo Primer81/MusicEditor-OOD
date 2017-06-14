@@ -192,7 +192,7 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
    * @return The beat the red line is at
    */
   public int getRedLineBeat() {
-    return (redLineLoc - this.BEAT_WIDTH + this.SIDE_WIDTH + 5) / 20;
+    return this.model.getBeat();
   }
 
   /**
@@ -201,7 +201,7 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
    * @return The notes being played
    */
   public List<Note> getNotesAtRedLine() {
-    return model.getNotesAtBeat((redLineLoc - 45) / 20);
+    return this.model.playBeat();
   }
 
   @Override
@@ -214,19 +214,15 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
     int keyCode = e.getKeyCode();
     switch (keyCode) {
       case KeyEvent.VK_RIGHT:
-        if (getRedLineBeat() >= model.getSongLength()) {
-          // do nothing.
-        }
-        else {
-          redLineLoc = redLineLoc + 20;
+        if (this.getRedLineBeat() < model.getSongLength() - 1) {
+          this.redLineLoc += this.BEAT_WIDTH;
+          this.model.nextBeat();
         }
         break;
       case KeyEvent.VK_LEFT:
-        if (getRedLineBeat() <= 0) {
-          // do nothing.
-        }
-        else {
-          redLineLoc = redLineLoc - 20;
+        if (this.getRedLineBeat() > 0) {
+          this.redLineLoc -= this.BEAT_WIDTH;
+          this.model.prevBeat();
         }
         break;
       default:
