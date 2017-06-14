@@ -382,6 +382,12 @@ public class MusicEditorModel implements IMusicEditorModel {
 
   @Override
   public ArrayList<Note> getNotesAtBeat(int beat) {
+    if (this.music.isEmpty()) {
+      throw new IllegalStateException("Error: No beats exist.");
+    }
+    if (beat < 0 || beat > this.getSongLength() - 1) {
+      throw new IllegalStateException("Error: Given beat does not exist.");
+    }
     ArrayList<Note> notes = new ArrayList<>();
     for (Note n : music) {
       int start = n.getStart();
