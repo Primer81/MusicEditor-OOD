@@ -190,4 +190,20 @@ public interface IMusicEditorModel {
    * @throws IllegalStateException if the given beat is invalid or if no beats exist in the editor
    */
   List<Note> getNotesAtBeat(int beat);
+
+  /**
+   * Gets the notes that begin at the given beat.
+   *
+   * @param beat The beat that the notes start at
+   * @return The notes beginning at the beat
+   * @throws IllegalStateException If the given beat is invalid or if the music is empty
+   */
+  List<Note> getNotesStartingAtBeat(int beat);
+
+  /**
+   * Gets the tempo of the music.
+   *
+   * @return The tempo
+   */
+  int getTempo();
 }

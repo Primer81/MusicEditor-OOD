@@ -1,7 +1,8 @@
 package cs3500.music.model;
 
 /**
- * Represents a musical note.
+ * Represents a musical note. A Note has a duration, an octave, a starting beat, a Pitch, an
+ * instrument, and a volume.
  */
 public class Note {
 
@@ -23,8 +24,8 @@ public class Note {
    * @param volume The volume of this note
    */
   public Note(int duration, int octave, int start, Pitch pitch, int instrument, int volume) {
-    if (duration < 1) {
-      throw new IllegalArgumentException("Error: Note duration cannot be less than one.");
+    if (duration < 0) {
+      throw new IllegalArgumentException("Error: Note duration cannot be less than zero.");
     }
     if (octave < 0) {
       throw new IllegalArgumentException("Error: Octave cannot be less than zero.");
