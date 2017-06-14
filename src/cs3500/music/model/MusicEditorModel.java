@@ -135,13 +135,13 @@ public class MusicEditorModel implements IMusicEditorModel {
 
   @Override
   public String getState() {
-    if (music.isEmpty()) {
+    if (getMusic().isEmpty()) {
       return "";
     }
     int length = getSongLength();
     StringBuilder sb = new StringBuilder(
-        String.format("%" + Integer.toString(length).length() + "s", ""));
-    ArrayList<String> range = this.getRange();
+            String.format("%" + Integer.toString(length).length() + "s", ""));
+    ArrayList<String> range = getRange();
     for (int i = 0; i < range.size(); i++) {
       sb.append(String.format("%5s", String.format("%-4s", String.format("%3s", range.get(i)))));
     }
@@ -162,12 +162,12 @@ public class MusicEditorModel implements IMusicEditorModel {
     boolean isNoteHead;
     boolean isNoteBody;
     String currBeat;
-    String row = String.format("%" + (Integer.toString(this.getSongLength()).length()) + "s",
+    String row = String.format("%" + (Integer.toString(getSongLength()).length()) + "s",
             current);
     for (int i = 0; i < noteRange.size(); i++) {
       currBeat = "     ";
-      for (int j = 0; j < music.size(); j++) {
-        Note n = music.get(j);
+      for (int j = 0; j < getMusic().size(); j++) {
+        Note n = getMusic().get(j);
         int start = n.getStart();
         String noteString = n.toString();
         String range = noteRange.get(i);
@@ -186,7 +186,6 @@ public class MusicEditorModel implements IMusicEditorModel {
     }
     return row;
   }
-
   @Override
   public List<Note> getMusic() {
     return new ArrayList<>(this.music);
