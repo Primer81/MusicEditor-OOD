@@ -380,6 +380,20 @@ public class MusicEditorModel implements IMusicEditorModel {
     return this.curBeat;
   }
 
+  @Override
+  public ArrayList<Note> getNotesAtBeat(int beat) {
+    ArrayList<Note> notes = new ArrayList<>();
+    for (Note n : music) {
+      int start = n.getStart();
+      for (int i = start; i < n.getDuration() + start; i++) {
+        if (i == beat) {
+          notes.add(n);
+        }
+      }
+    }
+    return notes;
+  }
+
   /**
    * Builder class that constructs a music composition.
    */

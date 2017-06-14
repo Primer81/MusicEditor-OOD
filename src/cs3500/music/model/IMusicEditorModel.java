@@ -181,4 +181,12 @@ public interface IMusicEditorModel {
    * @throws IllegalStateException if no beats exist
    */
   int getBeat() throws IllegalStateException;
+
+  /**
+   * Gets the notes that are being played at the given beat.
+   *
+   * @param beat The beat where the notes are collected
+   * @return The notes at the beat
+   */
+  List<Note> getNotesAtBeat(int beat);
 }

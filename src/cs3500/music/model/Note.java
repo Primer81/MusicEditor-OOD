@@ -136,6 +136,10 @@ public class Note {
     return octave - n2.getOctave();
   }
 
+  public void setStart(int start) {
+    this.start = start;
+  }
+
   @Override
   public String toString() {
     return pitch.getPitch().concat(Integer.toString(octave));

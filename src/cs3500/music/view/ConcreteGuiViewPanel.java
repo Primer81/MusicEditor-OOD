@@ -192,5 +192,14 @@ public class ConcreteGuiViewPanel extends JPanel {
     return (redLineLoc - this.BEAT_WIDTH + this.SIDE_WIDTH + 5) / 20;
   }
 
+  /**
+   * Gets the notes being played at the red line's current location.
+   *
+   * @return The notes being played
+   */
+  public List<Note> getNotesAtRedLine() {
+    return model.getNotesAtBeat((redLineLoc - 45) / 20);
+  }
+
 }
 
