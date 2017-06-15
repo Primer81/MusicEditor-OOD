@@ -77,6 +77,69 @@ public class MusicEditorModelTest {
     assertEquals(model.getMusic().contains(a3), false);
   }
 
+  // Tests that the constructor of MusicEditorModel throws an exception if given
+  // an arrayList of Note objects that contain overlapping notes of same pitch and octave.
+  // Case: same beatNum
+  @Test
+  public void testConstructor01() {
+    expectedEx.expect(IllegalArgumentException.class);
+    expectedEx.expectMessage("Error: Music cannot have overlapping notes.");
+
+    ArrayList<Note> music = new ArrayList<>(Arrays.asList(
+        new Note(2, 1, 2, Pitch.A, 1, 2),
+        new Note(2, 1, 2, Pitch.A, 1, 2)));
+    new MusicEditorModel(music, 1);
+  }
+
+  // Tests that the constructor of MusicEditorModel throws an exception if given
+  // an arrayList of Note objects that contain overlapping notes of same pitch and octave.
+  // Case: first note in overlap comes before second note in overlap.
+  @Test
+  public void testConstructor02() {
+    expectedEx.expect(IllegalArgumentException.class);
+    expectedEx.expectMessage("Error: Music cannot have overlapping notes.");
+
+    ArrayList<Note> music = new ArrayList<>(Arrays.asList(
+        new Note(2, 1, 1, Pitch.A, 1, 2),
+        new Note(2, 1, 2, Pitch.A, 1, 2)));
+    new MusicEditorModel(music, 1);
+  }
+
+  // Tests that the constructor of MusicEditorModel throws an exception if given
+  // an arrayList of Note objects that contain overlapping notes of same pitch and octave.
+  // Case: second note in overlap comes before first note in overlap.
+  @Test
+  public void testConstructor03() {
+    expectedEx.expect(IllegalArgumentException.class);
+    expectedEx.expectMessage("Error: Music cannot have overlapping notes.");
+
+    ArrayList<Note> music = new ArrayList<>(Arrays.asList(
+        new Note(2, 1, 2, Pitch.A, 1, 2),
+        new Note(2, 1, 1, Pitch.A, 1, 2)));
+    new MusicEditorModel(music, 1);
+  }
+
+  // Tests that the constructor of MusicEditorModel doesn't throw an exception if given
+  // an arrayList of Note objects that contains no overlapping notes of same pitch and octave.
+  @Test
+  public void testConstructor04() {
+    ArrayList<Note> music;
+    music = new ArrayList<>(Arrays.asList(
+        new Note(2, 2, 2, Pitch.A, 1, 1),
+        new Note(2, 1, 1, Pitch.A, 1, 2)));
+    this.model = new MusicEditorModel(music, 1);
+    music = new ArrayList<>(Arrays.asList(
+        new Note(2, 1, 2, Pitch.A_Sharp, 1, 1),
+        new Note(2, 1, 1, Pitch.A, 1, 2)));
+    this.model = new MusicEditorModel(music, 1);
+    assertEquals("" +
+        "   A1  A#1 \n" +
+        "0          \n" +
+        "1  X       \n" +
+        "2  |    X  \n" +
+        "3       |  ", this.model.getState());
+  }
+
   // Tests that the add note method throws an exception if the note about to be added
   // would overlap with another note.
   @Test
