@@ -19,6 +19,11 @@ public class MockMidiDevice implements Synthesizer {
 
   StringBuilder log;
 
+  /**
+   * Constructs a MockMidiDevice.
+   *
+   * @param log The StringBuilder that stores the log
+   */
   public MockMidiDevice(StringBuilder log) {
     this.log = log;
   }

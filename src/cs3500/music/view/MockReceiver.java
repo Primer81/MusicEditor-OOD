@@ -11,6 +11,11 @@ public class MockReceiver implements Receiver {
 
   StringBuilder log;
 
+  /**
+   * Constructs a MockReceiver.
+   *
+   * @param log The StringBuilder where the log output will be written
+   */
   public MockReceiver(StringBuilder log) {
     this.log = log;
   }

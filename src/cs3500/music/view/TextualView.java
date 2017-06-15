@@ -12,6 +12,11 @@ public class TextualView implements IMusicEditorView {
 
   private IMusicEditorModel model;
 
+  /**
+   * Constructs a TextualView.
+   *
+   * @param model The model to be displayed
+   */
   public TextualView(IMusicEditorModel model) {
     this.model = model;
   }
@@ -21,6 +26,11 @@ public class TextualView implements IMusicEditorView {
     System.out.print(this.getState());
   }
 
+  /**
+   * Returns the textual representation of the model's music.
+   *
+   * @return Text view of the music.
+   */
   private String getState() {
     if (model.getMusic().isEmpty()) {
       return "";

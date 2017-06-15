@@ -19,6 +19,11 @@ public class PianoView extends JPanel {
   private ConcreteGuiViewPanel concrete;
   private HashMap<Note, Rectangle> keyMap;
 
+  /**
+   * Constructs a PianoView.
+   *
+   * @param concrete The ConcreteGuiViewPanel to draw information about the notes from
+   */
   public PianoView(ConcreteGuiViewPanel concrete) {
     super();
     this.concrete = concrete;

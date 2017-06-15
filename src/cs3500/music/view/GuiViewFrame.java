@@ -23,7 +23,9 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
   private IMusicEditorModel model;
 
   /**
-   * Creates new GuiView.
+   * Constructs a new GuiViewFrame.
+   *
+   * @param model The model to be displayed
    */
   public GuiViewFrame(IMusicEditorModel model) {
     this.displayPanel = new ConcreteGuiViewPanel(model);
