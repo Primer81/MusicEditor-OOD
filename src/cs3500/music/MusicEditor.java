@@ -2,9 +2,7 @@ package cs3500.music;
 
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.MusicEditorModel;
-import cs3500.music.util.CompositionBuilder;
 import cs3500.music.util.MusicReader;
-import cs3500.music.view.IMusicEditorView;
 import cs3500.music.view.IMusicEditorView;
 
 import java.io.File;

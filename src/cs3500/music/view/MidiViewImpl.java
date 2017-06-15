@@ -131,4 +131,9 @@ public class MidiViewImpl implements IMusicEditorView {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public void initialize() {
+    // do nothing.
+  }
 }

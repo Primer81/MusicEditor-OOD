@@ -1,10 +1,13 @@
 package cs3500.music.view;
 
-import java.awt.*;
-import java.awt.event.MouseListener; // Possibly of interest for handling mouse events
+import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+
 
 import cs3500.music.model.IMusicEditorModel;
 
@@ -46,6 +49,7 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
     scrollPane.getVerticalScrollBar().setUnitIncrement(20);
   }
 
+  @Override
   public void initialize(){
     this.setVisible(true);
   }
@@ -60,31 +64,4 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
     initialize();
     displayPanel.repaint();
   }
-
-  public void autoScroll(int location) {
-    JScrollBar horizontal = scrollPane.getHorizontalScrollBar();
-    horizontal.setValue(location);
-  }
-
-  public void updateRed(int num) {
-    //concrete.updateRedLine(num);
-    //concrete.updateScroll(scrollPane.getVerticalScrollBar().getValue());
-    if (redLineBeat() % 20 == 0) {
-      autoScroll(concrete.getRedLineLocation() - 45);
-    }
-    repaint();
-  }
-
-  public void updateScroll() {
-    if (redLineBeat() % 20 == 0) {
-      autoScroll(concrete.getRedLineLocation() - 45);
-
-    }
-  }
-
-  public int redLineBeat() {
-    return concrete.getRedLineBeat();
-  }
-
-
 }

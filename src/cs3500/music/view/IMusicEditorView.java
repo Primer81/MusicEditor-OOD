@@ -17,6 +17,11 @@ public interface IMusicEditorView {
   void display() throws InvalidMidiDataException;
 
   /**
+   * Initializes some settings, such as visibility.
+   */
+  void initialize();
+
+  /**
    * Factory class for parsing view type from a String input.
    */
   class ReturnView {

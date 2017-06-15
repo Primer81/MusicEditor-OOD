@@ -1,7 +1,6 @@
 package cs3500.music.view;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
@@ -73,5 +72,10 @@ public class TextualView implements IMusicEditorView {
       row = row + currBeat;
     }
     return row;
+  }
+
+  @Override
+  public void initialize() {
+    // do nothing.
   }
 }

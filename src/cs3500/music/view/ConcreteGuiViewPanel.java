@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * Class that renders everything for the GUI view.
+ * Class that renders everything for the top half of the GUI view (everything except the keyboard).
  */
 public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
 
@@ -59,14 +59,14 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
     for (int i = 0; i < notes.size(); i++) {
       n = notes.get(i);
       noteY = getNoteY(n);
-      rect = new Rectangle(n.getStart() * this.BEAT_WIDTH + this.BEAT_WIDTH + this.SIDE_WIDTH + 5, noteY,
-              this.BEAT_WIDTH * n.getDuration(), this.NOTE_HEIGHT);
+      rect = new Rectangle(n.getStart() * this.BEAT_WIDTH + this.BEAT_WIDTH + this.SIDE_WIDTH + 5,
+              noteY, this.BEAT_WIDTH * n.getDuration(), this.NOTE_HEIGHT);
       rectangles.add(rect);
       g.setColor(Color.GREEN);
       g.fillRect(rect.x, rect.y, rect.width, rect.height);
       g.setColor(Color.BLACK);
-      g.fillRect((n.getStart()) * this.BEAT_WIDTH + this.BEAT_WIDTH + this.SIDE_WIDTH + 5, noteY, this.BEAT_WIDTH,
-              this.NOTE_HEIGHT);
+      g.fillRect((n.getStart()) * this.BEAT_WIDTH + this.BEAT_WIDTH + this.SIDE_WIDTH + 5, noteY,
+              this.BEAT_WIDTH, this.NOTE_HEIGHT);
     }
   }
 
@@ -167,14 +167,14 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
   private void drawRedLine(Graphics g) {
     List<String> range = model.getRange();
     g.setColor(Color.RED);
-    g.drawLine(redLineLoc, this.NOTE_HEIGHT, redLineLoc, this.NOTE_HEIGHT + this.NOTE_HEIGHT * range.size());
+    g.drawLine(redLineLoc, this.NOTE_HEIGHT, redLineLoc, this.NOTE_HEIGHT + this.NOTE_HEIGHT
+            * range.size());
   }
 
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension(this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + model.getSongLength() * 21, this.BEAT_WIDTH
-            + this.SIDE_WIDTH + 5 + model.getRange().size()
-            * 20 + 100);
+    return new Dimension(this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + model.getSongLength() * 21,
+            this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + model.getRange().size() * 20 + 100);
   }
 
   /**
