@@ -42,6 +42,35 @@ public class MidiViewImpl implements IMusicEditorView {
     this.receiver = r;
     currBeat = model.getBeat();
   }
+
+  /**
+   * Alternate constructor for testing.
+   *
+   * @param model The model to be displayed.
+   * @param synth The synthesizer.
+   */
+  public MidiViewImpl(IMusicEditorModel model, Synthesizer synth) throws MidiUnavailableException {
+    if (model == null) {
+      throw new IllegalArgumentException("Error: Model cannot be null.");
+    }
+    if (synth == null) {
+      throw new IllegalArgumentException("Error: Synthesizer cannot be null.");
+    }
+    this.model = model;
+    Synthesizer s;
+    Receiver r;
+    try {
+      s = synth;
+      r = s.getReceiver();
+    } catch (MidiUnavailableException e) {
+      s = null;
+      r = null;
+      e.printStackTrace();
+    }
+    this.synth = s;
+    this.receiver = r;
+  }
+
   /**
    * Relevant classes and methods from the javax.sound.midi library:
    * <ul>
