@@ -105,7 +105,7 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
   }
 
   /**
-   * Helper method. Gets the pitch of the note.
+   * Helper method. Parses the given string into a Pitch enumeration.
    *
    * @param pitch The String representing the pitch.
    * @return The pitch of the note
@@ -142,7 +142,8 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
   }
 
   /**
-   * Helper method. Draws the grid.
+   * Helper method. Draws the starting beat of each measure and lines to
+   * represent the start of each measure.
    *
    * @param g The graphics
    */
@@ -183,7 +184,7 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
    * @return The red line's location
    */
   public int getRedLineLocation() {
-    return redLineLoc;
+    return this.redLineLoc;
   }
 
   /**
@@ -240,6 +241,5 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
     super.addNotify();
     requestFocus();
   }
-
 }
 

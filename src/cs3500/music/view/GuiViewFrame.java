@@ -34,7 +34,7 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
     fake.add(1);
     fake.add(4);
     fake.add(20);
-    concrete = new ConcreteGuiViewPanel(model);
+    concrete = new ConcreteGuiViewPanel(this.model);
     piano = new PianoView(concrete);
     scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
