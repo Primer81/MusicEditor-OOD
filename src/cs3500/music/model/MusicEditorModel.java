@@ -186,6 +186,7 @@ public class MusicEditorModel implements IMusicEditorModel {
     }
     return row;
   }
+
   @Override
   public List<Note> getMusic() {
     return new ArrayList<>(this.music);

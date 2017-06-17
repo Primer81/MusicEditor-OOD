@@ -16,11 +16,7 @@ import cs3500.music.model.IMusicEditorModel;
  */
 public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView {
 
-  private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
-  private JScrollPane scrollPane;
-  private ConcreteGuiViewPanel concrete;
-  private JPanel piano;
-  private IMusicEditorModel model;
+  private final JPanel displayPanel;
 
   /**
    * Constructs a new GuiViewFrame.
@@ -29,15 +25,15 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
    */
   public GuiViewFrame(IMusicEditorModel model) {
     this.displayPanel = new ConcreteGuiViewPanel(model);
-    this.model = model;
+    IMusicEditorModel editorModel = model;
     ArrayList<Integer> fake = new ArrayList();
     fake.add(1);
     fake.add(4);
     fake.add(20);
-    concrete = new ConcreteGuiViewPanel(this.model);
-    piano = new PianoView(concrete);
-    scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    ConcreteGuiViewPanel concrete = new ConcreteGuiViewPanel(editorModel);
+    JPanel piano = new PianoView(concrete);
+    JScrollPane scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants
+            .VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
     this.setResizable(true);
     this.setLayout(new GridLayout(2, 1));
     this.add(scrollPane);
@@ -52,12 +48,12 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     this.setVisible(true);
   }
 
   @Override
-  public Dimension getPreferredSize(){
+  public Dimension getPreferredSize() {
     return new Dimension(1200, 1200);
   }
 

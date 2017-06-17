@@ -132,6 +132,7 @@ public class MockMidiDevice implements Synthesizer {
   public boolean loadInstruments(Soundbank soundbank, Patch[] patches) {
     return false;
   }
+  
   @Override
   public boolean loadAllInstruments(Soundbank soundbank) {
     return false;

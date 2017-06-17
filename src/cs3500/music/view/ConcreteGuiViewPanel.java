@@ -1,6 +1,9 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Rectangle;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +40,7 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
   }
 
   @Override
-  public void paintComponent(Graphics g){
+  public void paintComponent(Graphics g) {
     super.paintComponent(g);
     this.drawNotes(g);
     this.drawPitches(g);

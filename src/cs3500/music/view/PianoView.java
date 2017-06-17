@@ -1,11 +1,13 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Rectangle;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import cs3500.music.model.Note;
 import cs3500.music.model.Pitch;
@@ -17,7 +19,6 @@ import cs3500.music.model.Pitch;
 public class PianoView extends JPanel {
 
   private ConcreteGuiViewPanel concrete;
-  private HashMap<Note, Rectangle> keyMap;
 
   /**
    * Constructs a PianoView.
@@ -43,7 +44,7 @@ public class PianoView extends JPanel {
    */
   private void drawKeys(Graphics g) {
 
-    keyMap = new HashMap<>();
+    HashMap<Note, Rectangle> keyMap = new HashMap<>();
     Rectangle key;
     int pitch;
     int octave;
@@ -63,7 +64,8 @@ public class PianoView extends JPanel {
       g.setColor(Color.BLACK);
       g.drawRect(key.x, key.y, 18, 200);
 
-      if (blackPitch == 0 || blackPitch == 1 || blackPitch == 3 || blackPitch == 4 || blackPitch == 5) {
+      if (blackPitch == 0 || blackPitch == 1 || blackPitch == 3 || blackPitch == 4 || blackPitch
+              == 5) {
         temp++;
         pitch = temp % 12;
         octave = temp / 12;

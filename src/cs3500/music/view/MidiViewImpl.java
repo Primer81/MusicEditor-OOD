@@ -2,7 +2,14 @@ package cs3500.music.view;
 
 import java.util.List;
 
-import javax.sound.midi.*;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiChannel;
+import javax.sound.midi.MidiMessage;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Receiver;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Synthesizer;
 
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
@@ -14,7 +21,6 @@ public class MidiViewImpl implements IMusicEditorView {
   private final Synthesizer synth;
   private final Receiver receiver;
   private IMusicEditorModel model;
-  private int currBeat;
 
   /**
    * Constructs a MidiViewImpl.
@@ -40,7 +46,6 @@ public class MidiViewImpl implements IMusicEditorView {
     }
     this.synth = s;
     this.receiver = r;
-    currBeat = model.getBeat();
   }
 
   /**

@@ -52,6 +52,7 @@ public class IMusicEditorViewTest {
       e.printStackTrace();
     }
   }
+  
   @Test
   public void testInitMidi() {
     try {
