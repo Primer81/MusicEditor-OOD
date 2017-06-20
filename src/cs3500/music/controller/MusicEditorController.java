@@ -46,7 +46,7 @@ public class MusicEditorController {
         {this.view.keyTyped("right");}
     );
     keyTypes.put(' ',() ->
-        {this.view.keyTyped("play/start");}
+        {this.view.keyTyped("pause/play");}
     );
     keyTypes.put('s',() ->
         {this.view.keyTyped("toStart");}
