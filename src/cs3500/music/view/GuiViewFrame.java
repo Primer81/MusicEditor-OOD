@@ -1,20 +1,17 @@
 package cs3500.music.view;
 
-import java.awt.GridLayout;
-import java.awt.Dimension;
+import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-
+import javax.swing.*;
 
 import cs3500.music.model.IMusicEditorModel;
 
 /**
  * A skeleton Frame (i.e., a window) in Swing
  */
-public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView {
+public class GuiViewFrame extends JFrame implements IMusicEditorView {
 
   private final JPanel displayPanel;
 
@@ -50,6 +47,21 @@ public class GuiViewFrame extends javax.swing.JFrame implements IMusicEditorView
   @Override
   public void initialize() {
     this.setVisible(true);
+  }
+
+  @Override
+  public void addMouseListener(MouseListener mouse) {
+
+  }
+
+  @Override
+  public void keyTyped(String cmd) {
+
+  }
+
+  @Override
+  public void mouseClicked(Point point) {
+
   }
 
   @Override

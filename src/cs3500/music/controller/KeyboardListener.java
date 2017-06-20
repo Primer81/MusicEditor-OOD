@@ -19,7 +19,7 @@ import java.util.Map;
  * valid keylistener for Java Swing.
  */
 public class KeyboardListener implements KeyListener {
-    private Map<Integer,Runnable> keyTypedMap;
+    private Map<Character,Runnable> keyTypedMap;
     private Map<Integer,Runnable> keyPressedMap,keyReleasedMap;
 
     /**
@@ -30,11 +30,11 @@ public class KeyboardListener implements KeyListener {
     }
 
     /**
-     * Set the map for key typed events. Key typed events in Java Swing are integer codes.
+     * Set the map for key typed events. Key typed events in Java Swing are characters.
      * @param map
      */
 
-    public void setKeyTypedMap(Map<Integer,Runnable> map)
+    public void setKeyTypedMap(Map<Character,Runnable> map)
     {
         keyTypedMap = map;
     }
@@ -67,8 +67,8 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (keyTypedMap.containsKey(e.getKeyCode()))
-            keyTypedMap.get(e.getKeyCode()).run();
+        if (keyTypedMap.containsKey(e.getKeyChar()))
+            keyTypedMap.get(e.getKeyChar()).run();
     }
 
     /**

@@ -1,14 +1,19 @@
 package cs3500.music.view;
 
+import java.awt.*;
 import java.util.ArrayList;
 
+import cs3500.music.controller.KeyboardListener;
+import cs3500.music.controller.MouseKeyListener;
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
+
+import javax.swing.*;
 
 /**
  * Text view of the model to be printed to the console.
  */
-public class TextualView implements IMusicEditorView {
+public class TextualView extends JFrame implements IMusicEditorView {
 
   private IMusicEditorModel model;
 
@@ -23,7 +28,7 @@ public class TextualView implements IMusicEditorView {
 
   @Override
   public void display() {
-    System.out.print(this.getState());
+    System.out.print(this.getMusicState());
   }
 
   /**
@@ -31,7 +36,7 @@ public class TextualView implements IMusicEditorView {
    *
    * @return Text view of the music.
    */
-  private String getState() {
+  private String getMusicState() {
     if (model.getMusic().isEmpty()) {
       return "";
     }
@@ -87,5 +92,15 @@ public class TextualView implements IMusicEditorView {
   @Override
   public void initialize() {
     // do nothing.
+  }
+
+  @Override
+  public void keyTyped(String cmd) {
+
+  }
+
+  @Override
+  public void mouseClicked(Point point) {
+
   }
 }

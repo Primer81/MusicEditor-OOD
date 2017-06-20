@@ -3,10 +3,11 @@ package cs3500.music.view;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
-import cs3500.music.controller.KeyboardListener;
-import cs3500.music.controller.MouseKeyListener;
 import cs3500.music.model.IMusicEditorModel;
 
+import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
@@ -27,15 +28,30 @@ public interface IMusicEditorView {
 
   /**
    * Adds the given keyboard listener to this view.
-   * @param kbd the keyboard listener to be added
+   * @param listener the keyboard listener to be added
    */
-  void addKeyListener(KeyboardListener kbd);
+  void addKeyListener(KeyListener listener);
 
   /**
    * Adds the given mouse listener to this view.
-   * @param mouse the mouse listener to be added
+   * @param listener the mouse listener to be added
    */
-  void addMouseListener(MouseKeyListener mouse);
+  void addMouseListener(MouseListener listener);
+
+  /**
+   * This code should execute when the controller for this view receives a keyEvent.
+   * The given string is used to identify that keyEvent and respond to it.
+   * Does nothing if no events should occur.
+   */
+  void keyTyped(String cmd);
+
+  /**
+   * This code should execute when the controller for this view receives a keyEvent.
+   * The given string is used to identify that keyEvent and respond to it.
+   * Does nothing if no events should occur.
+   * @param point
+   */
+  void mouseClicked(Point point);
 
   /**
    * Factory class for parsing view type from a String input.

@@ -1,7 +1,11 @@
 package cs3500.music.controller;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * This class represents a mouse listener. It is configurable by the controller that
@@ -11,29 +15,56 @@ import java.awt.event.MouseListener;
  * valid mouseListener for Java Swing.
  */
 public class MouseKeyListener implements MouseListener {
+  Map<Integer, Runnable> mouseClickedMap;
+  Stack<Point> points;
+
+  /**
+   * Empty default constructor.
+   */
+  public MouseKeyListener() {
+  }
+
+  /**
+   * Sets this MouseKeyListener to the given map.
+   * @param map the new map
+   */
+  public void setMouseClickedMap(Map<Integer, Runnable> map) {
+    this.mouseClickedMap = map;
+  }
+
+  /**
+   * Sets this MouseKeyListener's set of points to the given arrayList
+   * @param points the new set of points
+   */
+  public void setPoints(Stack<Point> points) {
+    this.points = points;
+  }
 
   @Override
   public void mouseClicked(MouseEvent e) {
-
+    if (mouseClickedMap.containsKey(e.getButton())) {
+      points.push(e.getPoint());
+      mouseClickedMap.get(e.getButton()).run();
+    }
   }
 
   @Override
   public void mousePressed(MouseEvent e) {
-
+    // do nothing
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
-
+    // do nothing
   }
 
   @Override
   public void mouseEntered(MouseEvent e) {
-
+    // do nothing
   }
 
   @Override
   public void mouseExited(MouseEvent e) {
-
+    // do nothing
   }
 }

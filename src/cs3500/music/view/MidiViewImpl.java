@@ -1,5 +1,8 @@
 package cs3500.music.view;
 
+import java.awt.*;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -10,6 +13,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
+import javax.swing.*;
 
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
@@ -17,7 +21,7 @@ import cs3500.music.model.Note;
 /**
  * Provides an audible representation of the music, using Java's built-in MIDI support.
  */
-public class MidiViewImpl implements IMusicEditorView {
+public class MidiViewImpl extends JFrame implements IMusicEditorView {
   private final Synthesizer synth;
   private final Receiver receiver;
   private IMusicEditorModel model;
@@ -140,5 +144,20 @@ public class MidiViewImpl implements IMusicEditorView {
   @Override
   public void initialize() {
     // do nothing.
+  }
+
+  @Override
+  public void addMouseListener(MouseListener mouse) {
+
+  }
+
+  @Override
+  public void keyTyped(String cmd) {
+
+  }
+
+  @Override
+  public void mouseClicked(Point point) {
+
   }
 }
