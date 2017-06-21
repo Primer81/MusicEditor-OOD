@@ -4,11 +4,12 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
 import cs3500.music.model.IMusicEditorModel;
+import cs3500.music.model.Note;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 /**
  * Interface for Music Editor views. Allows the user to display the music using their chosen view.
@@ -39,39 +40,67 @@ public interface IMusicEditorView {
   void addMouseListener(MouseListener listener);
 
   /**
-   * This code should execute when the controller for this view receives a keyEvent.
-   * The given string is used to identify that keyEvent and respond to it.
-   * Does nothing if no events should occur.
+   * A method for the controller to pass the list of notes from the model to the view.
+   * @param music the list of notes
    */
-  void keyTyped(String cmd);
+  void setMusic(List<Note> music);
 
   /**
-   * This code should execute when the controller for this view receives a keyEvent.
-   * The given string is used to identify that keyEvent and respond to it.
-   * Does nothing if no events should occur.
-   * @param point
+   * A method for the controller to pass the tempo from the model to the view.
+   * @param tempo the tempo
    */
-  void mouseClicked(Point point);
+  void setTempo(int tempo);
+
+  /**
+   * Sets the current beat of the view to the specified Integer Object.
+   */
+  void setCurBeat(Integer curBeat);
+
+  /**
+   * Returns whether the music editor is paused or not.
+   * @return whether the player is paused
+   */
+  boolean isPaused();
+
+  /**
+   * Starts to play the music in the editor from the current beat.
+   */
+  void play() throws MidiUnavailableException;
+
+  /**
+   * Pauses the music in the editor if it isn't already.
+   */
+  void pause();
+
+  /**
+   * Regresses the view to the previous beat in the song if it can.
+   */
+  void prevBeat();
+
+  /**
+   * Progresses the view to the next beat in the song if it can.
+   */
+  void nextBeat();
 
   /**
    * Factory class for parsing view type from a String input.
    */
   class ReturnView {
-    private IMusicEditorModel model;
-
-    public ReturnView(IMusicEditorModel model) {
-      this.model = model;
+    public ReturnView() {
     }
 
     public IMusicEditorView init(String view) throws MidiUnavailableException {
       if (view.equals("gui")) {
-        return new GuiViewFrame(model);
+        return new GuiViewFrame();
       }
       else if (view.equals("textual")) {
-        return new TextualView(model);
+        return new TextualView();
       }
       else if (view.equals("midi")) {
-        return new MidiViewImpl(model);
+        return new MidiViewImpl();
+      }
+      else if (view.equals("composite")) {
+        return new CompositeView();
       }
       else {
         throw new IllegalArgumentException("Invalid view type.");

@@ -1,40 +1,71 @@
 package cs3500.music.view;
 
 import java.awt.*;
-import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.sound.midi.MidiUnavailableException;
 import javax.swing.*;
 
-import cs3500.music.model.IMusicEditorModel;
+import cs3500.music.controller.KeyboardListener;
+import cs3500.music.model.Note;
 
 /**
  * A skeleton Frame (i.e., a window) in Swing
  */
 public class GuiViewFrame extends JFrame implements IMusicEditorView {
-
-  private final JPanel displayPanel;
+  private ConcreteGuiViewPanel displayPanel;
+  private PianoView pianoViewPanel;
+  private JScrollPane scrollPane;
+  private List<Note> music;
+  private int tempo;
+  private int curBeat;
+  private boolean paused;
 
   /**
    * Constructs a new GuiViewFrame.
-   *
-   * @param model The model to be displayed
    */
-  public GuiViewFrame(IMusicEditorModel model) {
-    this.displayPanel = new ConcreteGuiViewPanel(model);
-    IMusicEditorModel editorModel = model;
-    ArrayList<Integer> fake = new ArrayList();
-    fake.add(1);
-    fake.add(4);
-    fake.add(20);
-    ConcreteGuiViewPanel concrete = new ConcreteGuiViewPanel(editorModel);
-    JPanel piano = new PianoView(concrete);
-    JScrollPane scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants
-            .VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+  public GuiViewFrame() {
+    this.displayPanel = new ConcreteGuiViewPanel();
+    this.pianoViewPanel = new PianoView(this.displayPanel);
+    this.scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants
+        .VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    this.music = new ArrayList<>();
+    this.tempo = 1000;
+    this.paused = true;
+  }
+
+  @Override
+  public void setMusic(List<Note> music) {
+    this.music = music;
+    this.displayPanel.setMusic(this.music);
+  }
+
+  @Override
+  public void setTempo(int tempo) {
+    this.tempo = tempo;
+  }
+
+  @Override
+  public void addKeyListener(KeyListener listener) {
+    this.scrollPane.addKeyListener(listener);
+    this.displayPanel.addKeyListener(listener);
+    this.pianoViewPanel.addKeyListener(listener);
+  }
+
+  @Override
+  public void setCurBeat(Integer curBeat) {
+    this.curBeat = curBeat;
+  }
+
+  @Override
+  public void initialize() {
     this.setResizable(true);
     this.setLayout(new GridLayout(2, 1));
-    this.add(scrollPane);
-    this.add(piano);
+    this.add(this.scrollPane);
+    this.add(this.pianoViewPanel);
     this.setTitle("Music Editor");
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     this.pack();
@@ -42,26 +73,36 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     this.requestFocus();
     scrollPane.getHorizontalScrollBar().setUnitIncrement(20);
     scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-  }
-
-  @Override
-  public void initialize() {
     this.setVisible(true);
   }
 
   @Override
-  public void addMouseListener(MouseListener mouse) {
-
+  public boolean isPaused() {
+    return this.paused;
   }
 
   @Override
-  public void keyTyped(String cmd) {
-
+  public void play() throws MidiUnavailableException {
+    this.paused = false;
   }
 
   @Override
-  public void mouseClicked(Point point) {
+  public void pause() {
+    this.paused = true;
+  }
 
+  @Override
+  public void prevBeat() {
+    this.curBeat -= 1;
+    this.displayPanel.prevBeat();
+    this.displayPanel.repaint();
+  }
+
+  @Override
+  public void nextBeat() {
+    this.curBeat += 1;
+    this.displayPanel.nextBeat();
+    this.displayPanel.repaint();
   }
 
   @Override
@@ -72,6 +113,6 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   @Override
   public void display() {
     initialize();
-    displayPanel.repaint();
+    this.displayPanel.repaint();
   }
 }

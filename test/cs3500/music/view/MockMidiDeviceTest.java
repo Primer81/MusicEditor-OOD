@@ -46,12 +46,12 @@ public class MockMidiDeviceTest {
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
     }
-
+/*
     try {
-      midiView = new MidiViewImpl(model, mockMidi);
+      midiView = new MidiViewImpl(mockMidi);
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
-    }
+    } */
   }
 
   @Test

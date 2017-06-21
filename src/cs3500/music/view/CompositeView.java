@@ -3,12 +3,15 @@ package cs3500.music.view;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.*;
+import java.util.List;
 
 import javax.sound.midi.MidiUnavailableException;
 
 import cs3500.music.controller.KeyboardListener;
 import cs3500.music.controller.MouseKeyListener;
 import cs3500.music.model.IMusicEditorModel;
+import cs3500.music.model.Note;
 
 /**
  * View that provides an audible view synced up with a visual view.
@@ -17,44 +20,90 @@ public class CompositeView implements IMusicEditorView {
 
   private GuiViewFrame gui;
   private MidiViewImpl midi;
-  private boolean playing;
+  private List<Note> music;
+  private int tempo;
+  private Integer curBeat;
+  private Boolean paused;
 
-  public CompositeView(IMusicEditorModel model) throws MidiUnavailableException {
-    this.gui = new GuiViewFrame(model);
-    this.midi = new MidiViewImpl(model);
-    this.playing = true;
+  public CompositeView() throws MidiUnavailableException {
+    this.gui = new GuiViewFrame();
+    this.midi = new MidiViewImpl();
+    this.music = new ArrayList<>();
+    this.tempo = 1000;
+    this.curBeat = 0;
   }
 
   @Override
-  public void display() {
-    if (playing) {
-      midi.display();
-    }
-    gui.display();
+  public void setMusic(List<Note> music) {
+    this.music = music;
   }
 
   @Override
-  public void initialize() {
-    // do nothing.
+  public void setTempo(int tempo) {
+    this.tempo = tempo;
+  }
+
+  @Override
+  public void setCurBeat(Integer curBeat) {
+    this.curBeat = curBeat;
   }
 
   @Override
   public void addKeyListener(KeyListener key) {
-    // do nothing, for now.
+    this.gui.addKeyListener(key);
+    this.midi.addKeyListener(key);
   }
 
   @Override
   public void addMouseListener(MouseListener mouse) {
-    // do nothing, for now.
+    this.gui.addMouseListener(mouse);
+    this.midi.addMouseListener(mouse);
   }
 
   @Override
-  public void keyTyped(String cmd) {
-    // do nothing, for now.
+  public void initialize() {
+    this.gui.setMusic(this.music);
+    this.gui.setTempo(this.tempo);
+    this.gui.setCurBeat(this.curBeat);
+    this.midi.setMusic(this.music);
+    this.midi.setTempo(this.tempo);
+    this.midi.setCurBeat(this.curBeat);
+    this.gui.initialize();
+    this.midi.initialize();
   }
 
   @Override
-  public void mouseClicked(Point point) {
-    // do nothing, for now.
+  public boolean isPaused() {
+    return this.gui.isPaused() && this.midi.isPaused();
+  }
+
+  @Override
+  public void play() throws MidiUnavailableException {
+    this.gui.play();
+    this.midi.play();
+  }
+
+  @Override
+  public void pause() {
+    this.gui.pause();
+    this.midi.pause();
+  }
+
+  @Override
+  public void prevBeat() {
+    this.curBeat -= 1;
+    this.gui.prevBeat();
+    this.midi.prevBeat();
+  }
+
+  @Override
+  public void nextBeat() {
+    this.curBeat += 1;
+    this.gui.nextBeat();
+    this.midi.nextBeat();
+  }
+
+  @Override
+  public void display() {
   }
 }

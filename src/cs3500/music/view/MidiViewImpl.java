@@ -3,161 +3,174 @@ package cs3500.music.view;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiChannel;
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Synthesizer;
-import javax.swing.*;
+import javax.sound.midi.*;
 
-import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 
 /**
  * Provides an audible representation of the music, using Java's built-in MIDI support.
  */
-public class MidiViewImpl extends JFrame implements IMusicEditorView {
-  private final Synthesizer synth;
-  private final Receiver receiver;
-  private IMusicEditorModel model;
+public class MidiViewImpl implements IMusicEditorView {
+  private Sequence sequence;
+  private Sequencer sequencer;
+  private List<Note> music;
+  private int tempo;
+  private int curBeat;
+  private boolean paused;
 
   /**
    * Constructs a MidiViewImpl.
    *
-   * @param model The model to be displayed
    * @throws MidiUnavailableException If the MIDI data is not available
    */
-  public MidiViewImpl(IMusicEditorModel model) throws MidiUnavailableException {
-    if (model == null) {
-      throw new IllegalArgumentException("Error: Model cannot be null.");
-    }
-    this.model = model;
-    Synthesizer s;
-    Receiver r;
+  public MidiViewImpl() throws MidiUnavailableException {
     try {
-      s = MidiSystem.getSynthesizer();
-      r = s.getReceiver();
-      s.open();
-    } catch (MidiUnavailableException e) {
-      s = null;
-      r = null;
+      this.sequence = new Sequence(Sequence.PPQ, 1);
+      this.sequence.createTrack();
+      this.sequencer = MidiSystem.getSequencer();
+      this.sequencer.open();
+      this.sequencer.setSequence(this.sequence);
+
+    } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
-    this.synth = s;
-    this.receiver = r;
+    this.music = new ArrayList<>();
+    this.tempo = 15000;
+    this.curBeat = 0;
+    this.paused = true;
   }
 
   /**
-   * Alternate constructor for testing.
-   *
-   * @param model The model to be displayed.
-   * @param synth The synthesizer.
+   * Creates a new sequence and converts the notes in the list of notes into a sequence and
+   * stores them in the sequence field. Sets the sequencer's sequence to the new sequence.
    */
-  public MidiViewImpl(IMusicEditorModel model, Synthesizer synth) throws MidiUnavailableException {
-    if (model == null) {
-      throw new IllegalArgumentException("Error: Model cannot be null.");
-    }
-    if (synth == null) {
-      throw new IllegalArgumentException("Error: Synthesizer cannot be null.");
-    }
-    this.model = model;
-    Synthesizer s;
-    Receiver r;
+  void reSequence() {
     try {
-      s = synth;
-      r = s.getReceiver();
-    } catch (MidiUnavailableException e) {
-      s = null;
-      r = null;
-      e.printStackTrace();
-    }
-    this.synth = s;
-    this.receiver = r;
-  }
-
-  /**
-   * Relevant classes and methods from the javax.sound.midi library:
-   * <ul>
-   *  <li>{@link MidiSystem#getSynthesizer()}</li>
-   *  <li>{@link Synthesizer}
-   *    <ul>
-   *      <li>{@link Synthesizer#open()}</li>
-   *      <li>{@link Synthesizer#getReceiver()}</li>
-   *      <li>{@link Synthesizer#getChannels()}</li>
-   *    </ul>
-   *  </li>
-   *  <li>{@link Receiver}
-   *    <ul>
-   *      <li>{@link Receiver#send(MidiMessage, long)}</li>
-   *      <li>{@link Receiver#close()}</li>
-   *    </ul>
-   *  </li>
-   *  <li>{@link MidiMessage}</li>
-   *  <li>{@link ShortMessage}</li>
-   *  <li>{@link MidiChannel}
-   *    <ul>
-   *      <li>{@link MidiChannel#getProgram()}</li>
-   *      <li>{@link MidiChannel#programChange(int)}</li>
-   *    </ul>
-   *  </li>
-   * </ul>
-   * @see <a href="https://en.wikipedia.org/wiki/General_MIDI">
-   *   https://en.wikipedia.org/wiki/General_MIDI
-   *   </a>
-   */
-
-  public void playNote(Note n)  throws InvalidMidiDataException {
-    int instrument = n.getInstrument() - 1;
-    int midiValue = ((n.getOctave() + 1) * 12) + n.getPitch().ordinal();
-    int volume = n.getVolume();
-    int tempo = model.getTempo();
-    MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, midiValue, volume);
-    MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, midiValue, volume);
-    this.receiver.send(start, n.getStart() * tempo);
-    this.receiver.send(stop, (n.getStart() + n.getDuration()) * tempo);
-  }
-
-  @Override
-  public void display() {
-    for (int i = 0; i < model.getSongLength(); i++) {
-      List<Note> notes = model.getNotesStartingAtBeat(i);
-      for (int j = 0; j < notes.size(); j++) {
-        try {
-          playNote(notes.get(j));
-        } catch (InvalidMidiDataException e) {
-          e.printStackTrace();
-        }
+      this.sequence = new Sequence(Sequence.PPQ, 1);
+      Track track = sequence.createTrack();
+      for (Note n: this.music) {
+        int instrument = n.getInstrument() - 1;
+        int midiValue = ((n.getOctave() + 1) * 12) + n.getPitch().ordinal();
+        int volume = n.getVolume();
+        MidiMessage start = new ShortMessage(ShortMessage.NOTE_ON, instrument, midiValue, volume);
+        MidiMessage stop = new ShortMessage(ShortMessage.NOTE_OFF, instrument, midiValue, volume);
+        track.add(new MidiEvent(start, n.getStart()));
+        track.add(new MidiEvent(stop, (n.getStart() + n.getDuration())));
       }
-    }
-    try {
-      Thread.sleep(this.model.getSongLength() * this.model.getTempo() / 1000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+      this.sequencer.setSequence(this.sequence);
+    } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
     }
   }
 
   @Override
-  public void initialize() {
-    // do nothing.
+  public void setMusic(List<Note> music) {
+    this.music = music;
+  }
+
+  @Override
+  public void setTempo(int tempo) {
+    this.tempo = tempo;
+  }
+
+  @Override
+  public void setCurBeat(Integer curBeat) {
+    this.curBeat = curBeat;
+  }
+
+  @Override
+  public void addKeyListener(KeyListener listener) {
+    // do nothing
   }
 
   @Override
   public void addMouseListener(MouseListener mouse) {
-
+    // do nothing
   }
 
   @Override
-  public void keyTyped(String cmd) {
-
+  public void initialize() {
+    this.reSequence();
   }
 
   @Override
-  public void mouseClicked(Point point) {
+  public boolean isPaused() {
+    return this.paused;
+  }
 
+  @Override
+  public void play() throws MidiUnavailableException {
+    if (this.isPaused()) {
+      this.sequencer.start();
+      this.sequencer.setTempoInMPQ(this.tempo);
+      this.paused = false;
+    }
+  }
+
+  @Override
+  public void pause() {
+    if (!this.isPaused()) {
+      this.sequencer.stop();
+      this.paused = true;
+    }
+  }
+
+  @Override
+  public void prevBeat() {
+    this.curBeat -= 1;
+    this.sequencer.setTickPosition(this.sequencer.getTickPosition() - 1);
+  }
+
+  @Override
+  public void nextBeat() {
+    this.curBeat += 1;
+    this.sequencer.setTickPosition(this.sequencer.getTickPosition() + 1);
+  }
+
+  /**
+   * Gets how many beats long the music is.
+   * @return number of beats
+   */
+  private int getSongLength() {
+    if (this.music.isEmpty()) {
+      return 0;
+    }
+    int length = 0;
+    for (Note n : this.music) {
+      if (n.getStart() + n.getDuration() >= length) {
+        length = n.getStart() + n.getDuration();
+      }
+    }
+    return length;
+  }
+
+  /**
+   * Gets the list of notes starting at the specified beat.
+   * @param beat the starting beat
+   * @return the list of notes
+   */
+  private ArrayList<Note> getNotesAtBeat(int beat) {
+    if (this.music.isEmpty()) {
+      throw new IllegalStateException("Error: No beats exist.");
+    }
+    if (beat < 0 || beat > this.getSongLength() - 1) {
+      throw new IllegalStateException("Error: Given beat does not exist.");
+    }
+    ArrayList<Note> notes = new ArrayList<>();
+    for (Note n : music) {
+      int start = n.getStart();
+      if (start == beat) {
+        notes.add(n);
+      }
+    }
+    return notes;
+  }
+
+  @Override
+  public void display() {
+    // nothing to display
   }
 }

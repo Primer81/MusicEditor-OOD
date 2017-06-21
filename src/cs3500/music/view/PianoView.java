@@ -78,7 +78,7 @@ public class PianoView extends JPanel {
       }
     }
 
-    List<Note> orangeNotes = concrete.getNotesAtRedLine();
+    List<Note> orangeNotes = this.concrete.getNotesAtRedLine();
     ArrayList<Note> notes = new ArrayList<>();
     ArrayList<Integer> indices = new ArrayList<>();
     for (Note n : orangeNotes) {

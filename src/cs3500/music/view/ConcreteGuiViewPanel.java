@@ -18,25 +18,22 @@ import java.awt.event.KeyListener;
 /**
  * Class that renders everything for the top half of the GUI view (everything except the keyboard).
  */
-public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
+public class ConcreteGuiViewPanel extends JPanel {
 
   private final int BEAT_WIDTH = 20;
   private final int NOTE_HEIGHT = 20;
   private final int SIDE_WIDTH = 20;
   private int redLineLoc;
-  private IMusicEditorModel model;
   private List<Rectangle> rectangles = new ArrayList<>();
+  private List<Note> music;
 
   /**
    * Constructs a ConcreteGuiViewPanel.
-   *
-   * @param model The model to be displayed
    */
-  public ConcreteGuiViewPanel(IMusicEditorModel model) {
+  public ConcreteGuiViewPanel() {
     super();
-    this.model = model;
     this.redLineLoc = this.BEAT_WIDTH + this.SIDE_WIDTH + 5;
-    addKeyListener(this);
+    this.music = new ArrayList<>();
   }
 
   @Override
@@ -48,6 +45,40 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
     this.drawRedLine(g);
   }
 
+  @Override
+  public Dimension getPreferredSize() {
+    return new Dimension(this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + this.getSongLength() * 21,
+        this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + this.getRange().size() * 20 + 100);
+  }
+
+  @Override
+  public void addNotify() {
+    super.addNotify();
+    requestFocus();
+  }
+
+  /**
+   * Public method used to set the list of notes to the specified value.
+   * @param music new list of notes
+   */
+  public void setMusic(List<Note> music) {
+    this.music = music;
+  }
+
+  /**
+   * Moves the red line to the next beat.
+   */
+  public void nextBeat() {
+    this.redLineLoc += this.BEAT_WIDTH;
+  }
+
+  /**
+   * Moves the red line to the previous beat.
+   */
+  public void prevBeat() {
+    this.redLineLoc -= this.BEAT_WIDTH;
+  }
+
   /**
    * Helper method. Draws the note heads and their bodies.
    *
@@ -56,11 +87,10 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
   private void drawNotes(Graphics g) {
     Note n;
     int noteY;
-    List<Note> notes = model.getMusic();
     Rectangle rect;
     this.rectangles.clear();
-    for (int i = 0; i < notes.size(); i++) {
-      n = notes.get(i);
+    for (int i = 0; i < this.music.size(); i++) {
+      n = this.music.get(i);
       noteY = getNoteY(n);
       rect = new Rectangle(n.getStart() * this.BEAT_WIDTH + this.BEAT_WIDTH + this.SIDE_WIDTH + 5,
               noteY, this.BEAT_WIDTH * n.getDuration(), this.NOTE_HEIGHT);
@@ -80,7 +110,7 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
    * @return The y-coordinate of the given Note
    */
   private int getNoteY(Note n) {
-    List<String> range = model.getRange();
+    List<String> range = this.getRange();
     String last = range.get(range.size() - 1);
     Pitch p = this.getNotePitch(last);
     int octave = this.getNoteOctave(last);
@@ -124,14 +154,23 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
   }
 
   /**
+   * Gets the notes being played at the red line's current location.
+   *
+   * @return The notes being played
+   */
+    public List<Note> getNotesAtRedLine() {
+      return this.getNotesAtBeat((this.redLineLoc - 45) / 20);
+    }
+
+  /**
    * Helper method. Draws the note labels (pitches) on the left side of the panel.
    *
    * @param g The graphics
    */
   private void drawPitches(Graphics g) {
     int r = 0;
-    int songLength = this.model.getSongLength();
-    List<String> range = this.model.getRange();
+    int songLength = this.getSongLength();
+    List<String> range = this.getRange();
     g.drawLine(this.BEAT_WIDTH + this.SIDE_WIDTH + 5, this.NOTE_HEIGHT,
         ((songLength + 2) * this.BEAT_WIDTH) + 5, this.NOTE_HEIGHT);
     for (int i = range.size() - 1; i >= 0; i--) {
@@ -151,8 +190,8 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
    * @param g The graphics
    */
   private void drawMeasures(Graphics g) {
-    List<String> range = model.getRange();
-    int songLength = model.getSongLength();
+    List<String> range = this.getRange();
+    int songLength = this.getSongLength();
     g.setColor(Color.BLACK);
     for (int i = 0; i <= songLength + (songLength % 4); i++) {
       int xValue = (i + 1) * this.BEAT_WIDTH + this.SIDE_WIDTH + 5;
@@ -169,80 +208,110 @@ public class ConcreteGuiViewPanel extends JPanel implements KeyListener {
    * @param g The graphics
    */
   private void drawRedLine(Graphics g) {
-    List<String> range = model.getRange();
+    List<String> range = this.getRange();
     g.setColor(Color.RED);
     g.drawLine(redLineLoc, this.NOTE_HEIGHT, redLineLoc, this.NOTE_HEIGHT + this.NOTE_HEIGHT
             * range.size());
   }
 
-  @Override
-  public Dimension getPreferredSize() {
-    return new Dimension(this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + model.getSongLength() * 21,
-            this.BEAT_WIDTH + this.SIDE_WIDTH + 5 + model.getRange().size() * 20 + 100);
-  }
-
   /**
-   * Gets the red line's location.
-   *
-   * @return The red line's location
+   * Returns a list of strings containing the range of pitches in the list of notes.
+   * @return range of pitches
    */
-  public int getRedLineLocation() {
-    return this.redLineLoc;
-  }
+  private ArrayList<String> getRange() {
+    boolean validRange;
+    boolean greaterThanFirst;
+    boolean lessThanLast;
 
-  /**
-   * Gets the beat the red line is at.
-   *
-   * @return The beat the red line is at
-   */
-  public int getRedLineBeat() {
-    return this.model.getBeat();
-  }
+    Note firstNote = this.firstOrLast(true);
+    int firstOctave = firstNote.getOctave();
+    Note lastNote = this.firstOrLast(false);
+    int lastOctave = lastNote.getOctave();
+    ArrayList<String> range = new ArrayList<>();
 
-  /**
-   * Gets the notes being played at the red line's current location.
-   *
-   * @return The notes being played
-   */
-  public List<Note> getNotesAtRedLine() {
-    return this.model.playBeat();
-  }
-
-  @Override
-  public void keyTyped(KeyEvent e) {
-    //  do nothing
-  }
-
-  @Override
-  public void keyPressed(KeyEvent e) {
-    int keyCode = e.getKeyCode();
-    switch (keyCode) {
-      case KeyEvent.VK_RIGHT:
-        if (this.model.hasNext()) {
-          this.redLineLoc += this.BEAT_WIDTH;
-          this.model.nextBeat();
+    for (int i = firstOctave; i <= lastOctave; i++) {
+      for (Pitch p : Pitch.values()) {
+        boolean notLastOctave = i != lastOctave;
+        greaterThanFirst = p.compareTo(firstNote.getPitch()) >= 0;
+        lessThanLast = p.compareTo(lastNote.getPitch()) <= 0;
+        if (i == firstOctave && i == lastOctave) {
+          validRange = greaterThanFirst && lessThanLast;
+        } else if (i == firstOctave) {
+          validRange = greaterThanFirst;
+        } else {
+          validRange = lessThanLast || notLastOctave;
         }
-        break;
-      case KeyEvent.VK_LEFT:
-        if (this.model.hasPrev()) {
-          this.redLineLoc -= this.BEAT_WIDTH;
-          this.model.prevBeat();
+        if (validRange) {
+          range.add(p.getPitch() + i);
         }
-        break;
-      default:
+      }
     }
-    repaint();
+    return range;
   }
 
-  @Override
-  public void keyReleased(KeyEvent e) {
-    // do nothing
+  /**
+   * Returns the first or last note in the music.
+   *
+   * @param first Whether the note to be returned is the first or not
+   * @return The first or last note
+   */
+  private Note firstOrLast(boolean first) {
+    if (this.music.isEmpty()) {
+      throw new IllegalStateException("Error: No notes.");
+    }
+    Note n = this.music.get(0);
+    for (int i = 0; i < this.music.size(); i++) {
+      int current = this.music.get(i).compare(n);
+      if (first) {
+        if (current < 0) {
+          n = this.music.get(i);
+        }
+      } else {
+        if (current > 0) {
+          n = this.music.get(i);
+        }
+      }
+    }
+    return n;
   }
 
-  @Override
-  public void addNotify() {
-    super.addNotify();
-    requestFocus();
+  /**
+   * Returns the number of beats in the list of notes.
+   * @return number of beats
+   */
+  private int getSongLength() {
+    if (this.music.isEmpty()) {
+      return 0;
+    }
+    int length = 0;
+    for (Note n : this.music) {
+      if (n.getStart() + n.getDuration() >= length) {
+        length = n.getStart() + n.getDuration();
+      }
+    }
+    return length;
+  }
+
+  /**
+   * Returns the notes at the specified beat.
+   * @param beat the beat specified
+   * @return the notes at the given beat
+   */
+  private ArrayList<Note> getNotesAtBeat(int beat) {
+    if (this.music.isEmpty()) {
+      throw new IllegalStateException("Error: No beats exist.");
+    }
+    if (beat < 0 || beat > this.getSongLength() - 1) {
+      throw new IllegalStateException("Error: Given beat does not exist.");
+    }
+    ArrayList<Note> notes = new ArrayList<>();
+    for (Note n : notes) {
+      int start = n.getStart();
+      if (start == beat) {
+        notes.add(n);
+      }
+    }
+    return notes;
   }
 }
 

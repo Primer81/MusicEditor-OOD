@@ -30,20 +30,10 @@ public class ConcreteGuiViewPanelTest {
   @Before
   public void initData() {
     model = new MusicEditorModel();
-    concrete = new ConcreteGuiViewPanel(model);
+    concrete = new ConcreteGuiViewPanel();
     model.addNote(a3);
     model.addNote(b4);
     model.addNote(c3);
-  }
-
-  @Test
-  public void testGetRedLine() {
-    assertEquals(0, concrete.getRedLineBeat());
-  }
-
-  @Test
-  public void testGetRedLineLoc() {
-    assertEquals(45, concrete.getRedLineLocation());
   }
 
   @Test

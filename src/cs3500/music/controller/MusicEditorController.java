@@ -3,9 +3,10 @@ package cs3500.music.controller;
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.view.IMusicEditorView;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -19,11 +20,15 @@ public class MusicEditorController {
     model = m;
   }
 
-  public void setView(IMusicEditorView v)
-  {
+  public void setView(IMusicEditorView v) throws InvalidMidiDataException {
     view = v;
+    v.setMusic(this.model.getMusic());
+    v.setTempo(this.model.getTempo());
+    v.setCurBeat(this.model.getBeat());
     //create and set the keyboard listener and mouse listener
-    configureKeyBoardListener();
+    this.configureKeyBoardListener();
+    this.configureMouseKeyListener();
+    v.initialize();
   }
 
   /**
@@ -39,28 +44,41 @@ public class MusicEditorController {
     Map<Integer,Runnable> keyPresses = new HashMap<Integer,Runnable>();
     Map<Integer,Runnable> keyReleases = new HashMap<Integer,Runnable>();
 
-    keyTypes.put(',',() ->
-        {this.view.keyTyped("left");}
-    );
-    keyTypes.put('.',() ->
-        {this.view.keyTyped("right");}
-    );
-    keyTypes.put(' ',() ->
-        {this.view.keyTyped("pause/play");}
-    );
-    keyTypes.put('s',() ->
-        {this.view.keyTyped("toStart");}
-    );
-    keyTypes.put('e',() ->
-        {this.view.keyTyped("toEnd");}
-    );
+    keyTypes.put(',',() -> {
+      if (this.model.hasPrev()) {
+        this.model.prevBeat();
+        this.view.prevBeat();
+      }
+    });
+    keyTypes.put('.',() -> {
+      if (this.model.hasNext()) {
+        this.model.nextBeat();
+        this.view.nextBeat();
+      }
+    });
+    keyTypes.put(' ',() -> {
+      if (this.view.isPaused()) {
+        try {
+          this.view.play();
+        } catch (MidiUnavailableException e) {
+          e.printStackTrace();
+        }
+      }
+      else {
+        this.view.pause();
+      }
+    });
+    keyTypes.put('s',() -> {
+    });
+    keyTypes.put('e',() -> {
+    });
 
     KeyboardListener kbd = new KeyboardListener();
     kbd.setKeyTypedMap(keyTypes);
     kbd.setKeyPressedMap(keyPresses);
     kbd.setKeyReleasedMap(keyReleases);
 
-    view.addKeyListener(kbd);
+    this.view.addKeyListener(kbd);
   }
 
   /**
@@ -75,7 +93,12 @@ public class MusicEditorController {
     Stack<Point> points = new Stack<>();
 
     mouseClicks.put(MouseEvent.BUTTON1, () -> {
-      this.view.mouseClicked(points.peek());
     });
+
+    MouseKeyListener mkl = new MouseKeyListener();
+    mkl.setMouseClickedMap(mouseClicks);
+    mkl.setPoints(points);
+
+    this.view.addMouseListener(mkl);
   }
 }

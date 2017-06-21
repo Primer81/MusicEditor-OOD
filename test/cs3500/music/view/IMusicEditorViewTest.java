@@ -32,7 +32,7 @@ public class IMusicEditorViewTest {
     model.addNote(a3);
     model.addNote(b4);
     model.addNote(c3);
-    returnView = new IMusicEditorView.ReturnView(model);
+    returnView = new IMusicEditorView.ReturnView();
   }
 
   @Test

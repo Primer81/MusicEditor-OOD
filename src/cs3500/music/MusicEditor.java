@@ -1,5 +1,6 @@
 package cs3500.music;
 
+import cs3500.music.controller.MusicEditorController;
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.MusicEditorModel;
 import cs3500.music.util.MusicReader;
@@ -45,28 +46,38 @@ public class MusicEditor {
     }
     IMusicEditorModel model = MusicReader.parseFile(fileReader, builder);
 
+    MusicEditorController controller = new MusicEditorController(model);
+
     IMusicEditorView view = null;
 
     while (view == null) {
-      System.out.print("\nEnter 'g' for GUI view, 't' for textual view, or 'm' for MIDI view.");
+      System.out.print("\nEnter 'g' for GUI view, 't' for textual view, 'm' for MIDI view, or " +
+          "'c' for the composite view.");
       switch (in.next()) {
         case "g":
           try {
-            view = new IMusicEditorView.ReturnView(model).init("gui");
+            view = new IMusicEditorView.ReturnView().init("gui");
           } catch (MidiUnavailableException e) {
             e.printStackTrace();
           }
           break;
         case "t":
           try {
-            view = new IMusicEditorView.ReturnView(model).init("textual");
+            view = new IMusicEditorView.ReturnView().init("textual");
           } catch (MidiUnavailableException e) {
             e.printStackTrace();
           }
           break;
         case "m":
           try {
-            view = new IMusicEditorView.ReturnView(model).init("midi");
+            view = new IMusicEditorView.ReturnView().init("midi");
+          } catch (MidiUnavailableException e) {
+            e.printStackTrace();
+          }
+          break;
+        case "c":
+          try {
+            view = new IMusicEditorView.ReturnView().init("composite");
           } catch (MidiUnavailableException e) {
             e.printStackTrace();
           }
@@ -75,6 +86,6 @@ public class MusicEditor {
           System.out.append("Invalid view type.");
       }
     }
-    view.display();
+    controller.setView(view);
   }
 }
