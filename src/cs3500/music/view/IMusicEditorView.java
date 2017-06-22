@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 
 import cs3500.music.model.IMusicEditorModel;
@@ -40,6 +41,12 @@ public interface IMusicEditorView {
   void addMouseListener(MouseListener listener);
 
   /**
+   * Adds the given meta event listener to this view.
+   * @param listener the meta event listener
+   */
+  void addMetaEventListener(MetaEventListener listener);
+
+  /**
    * A method for the controller to pass the list of notes from the model to the view.
    * @param music the list of notes
    */
@@ -52,9 +59,15 @@ public interface IMusicEditorView {
   void setTempo(int tempo);
 
   /**
-   * Sets the current beat of the view to the specified Integer Object.
+   * Sets the current beat of the view to the specified value.
    */
-  void setCurBeat(Integer curBeat);
+  void setCurBeat(int curBeat);
+
+  /**
+   * Sets the tick position of the sequencer to the specified value. This value should be the same
+   * as the current beat at any given time but requires another method to be set.
+   */
+  void setTickPosition(int tickPosition);
 
   /**
    * Sets whether the view is paused or not.
@@ -77,16 +90,6 @@ public interface IMusicEditorView {
    * Pauses the music in the editor if it isn't already.
    */
   void pause();
-
-  /**
-   * Regresses the view to the previous beat in the song if it can.
-   */
-  void prevBeat();
-
-  /**
-   * Progresses the view to the next beat in the song if it can.
-   */
-  void nextBeat();
 
   /**
    * Factory class for parsing view type from a String input.

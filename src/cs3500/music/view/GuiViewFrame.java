@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.*;
 
@@ -49,6 +50,23 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   }
 
   @Override
+  public void setCurBeat(int curBeat) {
+    this.curBeat = curBeat;
+    this.displayPanel.setCurBeat(this.curBeat);
+    this.displayPanel.repaint();
+  }
+
+  @Override
+  public void setPaused(boolean paused) {
+    this.paused = paused;
+  }
+
+  @Override
+  public void setTickPosition(int tickPosition) {
+    // does nothing
+  }
+
+  @Override
   public void addKeyListener(KeyListener listener) {
     this.scrollPane.addKeyListener(listener);
     this.displayPanel.addKeyListener(listener);
@@ -56,13 +74,8 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   }
 
   @Override
-  public void setCurBeat(Integer curBeat) {
-    this.curBeat = curBeat;
-  }
-
-  @Override
-  public void setPaused(boolean paused) {
-    this.paused = paused;
+  public void addMetaEventListener(MetaEventListener listener) {
+    // does nothing
   }
 
   @Override
@@ -94,20 +107,6 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   @Override
   public void pause() {
     this.paused = true;
-  }
-
-  @Override
-  public void prevBeat() {
-    this.curBeat -= 1;
-    this.displayPanel.prevBeat();
-    this.displayPanel.repaint();
-  }
-
-  @Override
-  public void nextBeat() {
-    this.curBeat += 1;
-    this.displayPanel.nextBeat();
-    this.displayPanel.repaint();
   }
 
   @Override

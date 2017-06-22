@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.List;
 
+import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 
 import cs3500.music.controller.KeyboardListener;
@@ -37,21 +38,35 @@ public class CompositeView implements IMusicEditorView {
   @Override
   public void setMusic(List<Note> music) {
     this.music = music;
+    this.gui.setMusic(music);
+    this.midi.setMusic(music);
   }
 
   @Override
   public void setTempo(int tempo) {
     this.tempo = tempo;
+    this.gui.setTempo(tempo);
+    this.midi.setTempo(tempo);
   }
 
   @Override
-  public void setCurBeat(Integer curBeat) {
+  public void setCurBeat(int curBeat) {
     this.curBeat = curBeat;
+    this.gui.setCurBeat(curBeat);
+    this.midi.setCurBeat(curBeat);
+  }
+
+  @Override
+  public void setTickPosition(int tickPosition) {
+    this.gui.setTickPosition(tickPosition);
+    this.midi.setTickPosition(tickPosition);
   }
 
   @Override
   public void setPaused(boolean paused) {
     this.paused = paused;
+    this.gui.setPaused(paused);
+    this.midi.setPaused(paused);
   }
 
   @Override
@@ -64,6 +79,12 @@ public class CompositeView implements IMusicEditorView {
   public void addMouseListener(MouseListener mouse) {
     this.gui.addMouseListener(mouse);
     this.midi.addMouseListener(mouse);
+  }
+
+  @Override
+  public void addMetaEventListener(MetaEventListener listener) {
+    this.gui.addMetaEventListener(listener);
+    this.midi.addMetaEventListener(listener);
   }
 
   @Override
@@ -95,20 +116,6 @@ public class CompositeView implements IMusicEditorView {
   public void pause() {
     this.gui.pause();
     this.midi.pause();
-  }
-
-  @Override
-  public void prevBeat() {
-    this.curBeat -= 1;
-    this.gui.prevBeat();
-    this.midi.prevBeat();
-  }
-
-  @Override
-  public void nextBeat() {
-    this.curBeat += 1;
-    this.gui.nextBeat();
-    this.midi.nextBeat();
   }
 
   @Override

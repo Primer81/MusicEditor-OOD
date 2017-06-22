@@ -51,6 +51,7 @@ public class MidiViewImpl implements IMusicEditorView {
     try {
       this.sequence = new Sequence(Sequence.PPQ, 1);
       Track track = sequence.createTrack();
+      // Add midi messages to the track in the sequence to represent notes.
       for (Note n: this.music) {
         int instrument = n.getInstrument() - 1;
         int midiValue = ((n.getOctave() + 1) * 12) + n.getPitch().ordinal();
@@ -60,6 +61,17 @@ public class MidiViewImpl implements IMusicEditorView {
         track.add(new MidiEvent(start, n.getStart()));
         track.add(new MidiEvent(stop, (n.getStart() + n.getDuration())));
       }
+      // Add meta messages to the sequencer so that the controller is notified every beat.
+      for (int i = 0; i < this.getSongLength(); i++) {
+        byte[] data = "beat".getBytes();
+        MidiMessage meta = new MetaMessage(0, data, data.length);
+        track.add(new MidiEvent(meta, i));
+      }
+      // Add meta messages to the sequencer to notify controller when song ends.
+      byte[] data = "end".getBytes();
+      MidiMessage meta = new MetaMessage(0, data, data.length);
+      track.add(new MidiEvent(meta, this.getSongLength()));
+      // set the sequence
       this.sequencer.setSequence(this.sequence);
     } catch (InvalidMidiDataException e) {
         e.printStackTrace();
@@ -77,8 +89,14 @@ public class MidiViewImpl implements IMusicEditorView {
   }
 
   @Override
-  public void setCurBeat(Integer curBeat) {
+  public void setCurBeat(int curBeat) {
     this.curBeat = curBeat;
+  }
+
+  @Override
+  public void setTickPosition(int tickPosition) {
+    this.sequencer.setTickPosition(tickPosition);
+    this.sequencer.setTempoInMPQ(this.tempo);
   }
 
   @Override
@@ -97,11 +115,17 @@ public class MidiViewImpl implements IMusicEditorView {
   }
 
   @Override
+  public void addMetaEventListener(MetaEventListener listener) {
+    this.sequencer.addMetaEventListener(listener);
+  }
+
+  @Override
   public void initialize() {
     this.reSequence();
     try {
       if (!this.paused) {
         this.play(); // wont play unless unpaused
+        this.sequencer.setTempoInMPQ(this.tempo);
       }
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
@@ -124,18 +148,6 @@ public class MidiViewImpl implements IMusicEditorView {
   public void pause() {
     this.sequencer.stop();
     this.paused = true;
-  }
-
-  @Override
-  public void prevBeat() {
-    this.curBeat -= 1;
-    this.sequencer.setTickPosition(this.sequencer.getTickPosition() - 1);
-  }
-
-  @Override
-  public void nextBeat() {
-    this.curBeat += 1;
-    this.sequencer.setTickPosition(this.sequencer.getTickPosition() + 1);
   }
 
   /**

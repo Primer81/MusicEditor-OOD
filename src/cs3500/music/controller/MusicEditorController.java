@@ -6,6 +6,7 @@ import cs3500.music.view.IMusicEditorView;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +26,10 @@ public class MusicEditorController {
     v.setMusic(this.model.getMusic());
     v.setTempo(this.model.getTempo());
     v.setCurBeat(this.model.getBeat());
-    //create and set the keyboard listener and mouse listener
+    //create and set the listeners
     this.configureKeyBoardListener();
     this.configureMouseKeyListener();
+    this.configureMetaEventsListener();
     v.initialize();
   }
 
@@ -44,18 +46,6 @@ public class MusicEditorController {
     Map<Integer,Runnable> keyPresses = new HashMap<Integer,Runnable>();
     Map<Integer,Runnable> keyReleases = new HashMap<Integer,Runnable>();
 
-    keyTypes.put(',',() -> {
-      if (this.model.hasPrev()) {
-        this.model.prevBeat();
-        this.view.prevBeat();
-      }
-    });
-    keyTypes.put('.',() -> {
-      if (this.model.hasNext()) {
-        this.model.nextBeat();
-        this.view.nextBeat();
-      }
-    });
     keyTypes.put(' ',() -> {
       if (this.view.isPaused()) {
         try {
@@ -69,8 +59,29 @@ public class MusicEditorController {
       }
     });
     keyTypes.put('s',() -> {
+      this.model.setBeat(0);
+      this.view.setCurBeat(this.model.getBeat());
+      this.view.setTickPosition(this.model.getBeat());
     });
     keyTypes.put('e',() -> {
+      this.model.setBeat(this.model.getSongLength() - 1);
+      this.view.setCurBeat(this.model.getBeat());
+      this.view.setTickPosition(this.model.getBeat());
+    });
+
+    keyPresses.put(KeyEvent.VK_LEFT,() -> {
+      if (this.model.hasPrev()) {
+        this.model.prevBeat();
+        this.view.setCurBeat(this.model.getBeat());
+        this.view.setTickPosition(this.model.getBeat());
+      }
+    });
+    keyPresses.put(KeyEvent.VK_RIGHT,() -> {
+      if (this.model.hasNext()) {
+        this.model.nextBeat();
+        this.view.setCurBeat(this.model.getBeat());
+        this.view.setTickPosition(this.model.getBeat());
+      }
     });
 
     KeyboardListener kbd = new KeyboardListener();
@@ -100,5 +111,29 @@ public class MusicEditorController {
     mkl.setPoints(points);
 
     this.view.addMouseListener(mkl);
+  }
+
+  /**
+   * Creates and set a meta listener for the view.
+   * In effect it creates snippets of code as Runnable object, one for each time a meta event is
+   * read by the sequencer.
+   * Last we create our MetaEventsListener object, set all its maps and then give it to
+   * the view.
+   */
+  private void configureMetaEventsListener() {
+    Map<String, Runnable> metaRead = new HashMap<>();
+
+    metaRead.put("beat", () -> {
+      this.model.nextBeat();
+      this.view.setCurBeat(this.model.getBeat());
+    });
+    metaRead.put("end", () -> {
+      this.view.setPaused(true);
+    });
+
+    MetaEventsListener mel = new MetaEventsListener();
+    mel.setMetaReadMap(metaRead);
+
+    this.view.addMetaEventListener(mel);
   }
 }

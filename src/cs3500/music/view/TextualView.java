@@ -10,6 +10,7 @@ import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 import cs3500.music.model.Pitch;
 
+import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.*;
 
@@ -38,18 +39,28 @@ public class TextualView extends JFrame implements IMusicEditorView {
   }
 
   @Override
-  public void setCurBeat(Integer curBeat) {
+  public void setCurBeat(int curBeat) {
     // does nothing
   }
 
   @Override
   public void setPaused(boolean paused) {
-    // do nothing
+    // does nothing
+  }
+
+  @Override
+  public void setTickPosition(int tickPosition) {
+
   }
 
   @Override
   public void initialize() {
     System.out.print(this.getMusicState());
+  }
+
+  @Override
+  public void addMetaEventListener(MetaEventListener listener) {
+    // does nothing
   }
 
   @Override
@@ -65,16 +76,6 @@ public class TextualView extends JFrame implements IMusicEditorView {
   @Override
   public void pause() {
     // do nothing
-  }
-
-  @Override
-  public void prevBeat() {
-    // does nothing
-  }
-
-  @Override
-  public void nextBeat() {
-    // does nothing
   }
 
   /**

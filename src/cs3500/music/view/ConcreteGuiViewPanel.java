@@ -26,6 +26,7 @@ public class ConcreteGuiViewPanel extends JPanel {
   private int redLineLoc;
   private List<Rectangle> rectangles = new ArrayList<>();
   private List<Note> music;
+  private int curBeat;
 
   /**
    * Constructs a ConcreteGuiViewPanel.
@@ -69,6 +70,7 @@ public class ConcreteGuiViewPanel extends JPanel {
    * Moves the red line to the next beat.
    */
   public void nextBeat() {
+    this.curBeat += 1;
     this.redLineLoc += this.BEAT_WIDTH;
   }
 
@@ -76,7 +78,16 @@ public class ConcreteGuiViewPanel extends JPanel {
    * Moves the red line to the previous beat.
    */
   public void prevBeat() {
+    this.curBeat += 1;
     this.redLineLoc -= this.BEAT_WIDTH;
+  }
+
+  /**
+   * Sets the current beat and moves the red line to the new beat.
+   */
+  public void setCurBeat(int curBeat) {
+    this.curBeat = curBeat;
+    this.redLineLoc = (this.BEAT_WIDTH + this.SIDE_WIDTH + 5) + this.BEAT_WIDTH * this.curBeat;
   }
 
   /**
@@ -159,7 +170,7 @@ public class ConcreteGuiViewPanel extends JPanel {
    * @return The notes being played
    */
     public List<Note> getNotesAtRedLine() {
-      return this.getNotesAtBeat((this.redLineLoc - 45) / 20);
+      return this.getNotesAtBeat(this.curBeat);
     }
 
   /**
