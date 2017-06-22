@@ -40,7 +40,7 @@ public class MidiViewImpl implements IMusicEditorView {
     this.music = new ArrayList<>();
     this.tempo = 15000;
     this.curBeat = 0;
-    this.paused = true;
+    this.paused = false;
   }
 
   /**
@@ -82,6 +82,11 @@ public class MidiViewImpl implements IMusicEditorView {
   }
 
   @Override
+  public void setPaused(boolean paused) {
+    this.paused = paused;
+  }
+
+  @Override
   public void addKeyListener(KeyListener listener) {
     // do nothing
   }
@@ -94,6 +99,13 @@ public class MidiViewImpl implements IMusicEditorView {
   @Override
   public void initialize() {
     this.reSequence();
+    try {
+      if (!this.paused) {
+        this.play(); // wont play unless unpaused
+      }
+    } catch (MidiUnavailableException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -103,19 +115,15 @@ public class MidiViewImpl implements IMusicEditorView {
 
   @Override
   public void play() throws MidiUnavailableException {
-    if (this.isPaused()) {
-      this.sequencer.start();
-      this.sequencer.setTempoInMPQ(this.tempo);
-      this.paused = false;
-    }
+    this.sequencer.start();
+    this.sequencer.setTempoInMPQ(this.tempo);
+    this.paused = false;
   }
 
   @Override
   public void pause() {
-    if (!this.isPaused()) {
-      this.sequencer.stop();
-      this.paused = true;
-    }
+    this.sequencer.stop();
+    this.paused = true;
   }
 
   @Override

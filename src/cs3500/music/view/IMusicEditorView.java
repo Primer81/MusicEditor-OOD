@@ -57,6 +57,12 @@ public interface IMusicEditorView {
   void setCurBeat(Integer curBeat);
 
   /**
+   * Sets whether the view is paused or not.
+   * @param paused new paused value
+   */
+  void setPaused(boolean paused);
+
+  /**
    * Returns whether the music editor is paused or not.
    * @return whether the player is paused
    */

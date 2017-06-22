@@ -61,6 +61,11 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   }
 
   @Override
+  public void setPaused(boolean paused) {
+    this.paused = paused;
+  }
+
+  @Override
   public void initialize() {
     this.setResizable(true);
     this.setLayout(new GridLayout(2, 1));

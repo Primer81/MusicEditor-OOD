@@ -31,6 +31,7 @@ public class CompositeView implements IMusicEditorView {
     this.music = new ArrayList<>();
     this.tempo = 1000;
     this.curBeat = 0;
+    this.paused = true;
   }
 
   @Override
@@ -46,6 +47,11 @@ public class CompositeView implements IMusicEditorView {
   @Override
   public void setCurBeat(Integer curBeat) {
     this.curBeat = curBeat;
+  }
+
+  @Override
+  public void setPaused(boolean paused) {
+    this.paused = paused;
   }
 
   @Override
@@ -65,9 +71,11 @@ public class CompositeView implements IMusicEditorView {
     this.gui.setMusic(this.music);
     this.gui.setTempo(this.tempo);
     this.gui.setCurBeat(this.curBeat);
+    this.gui.setPaused(this.paused);
     this.midi.setMusic(this.music);
     this.midi.setTempo(this.tempo);
     this.midi.setCurBeat(this.curBeat);
+    this.midi.setPaused(this.paused);
     this.gui.initialize();
     this.midi.initialize();
   }

@@ -43,6 +43,11 @@ public class TextualView extends JFrame implements IMusicEditorView {
   }
 
   @Override
+  public void setPaused(boolean paused) {
+    // do nothing
+  }
+
+  @Override
   public void initialize() {
     System.out.print(this.getMusicState());
   }
