@@ -18,7 +18,7 @@ import cs3500.music.model.Note;
  */
 public class GuiViewFrame extends JFrame implements IMusicEditorView {
   private ConcreteGuiViewPanel displayPanel;
-  private PianoView pianoViewPanel;
+  private JPanel pianoViewPanel;
   private JScrollPane scrollPane;
   private List<Note> music;
   private int tempo;
@@ -36,6 +36,7 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     this.music = new ArrayList<>();
     this.tempo = 1000;
     this.paused = true;
+    this.curBeat = 0;
   }
 
   @Override
@@ -92,6 +93,8 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     scrollPane.getHorizontalScrollBar().setUnitIncrement(20);
     scrollPane.getVerticalScrollBar().setUnitIncrement(20);
     this.setVisible(true);
+    this.displayPanel.repaint();
+    System.out.print(displayPanel.getNotesAtRedLine());
   }
 
   @Override

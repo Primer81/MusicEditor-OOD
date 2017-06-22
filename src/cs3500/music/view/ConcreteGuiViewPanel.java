@@ -170,7 +170,7 @@ public class ConcreteGuiViewPanel extends JPanel {
    * @return The notes being played
    */
     public List<Note> getNotesAtRedLine() {
-      return this.getNotesAtBeat(this.curBeat);
+      return this.playBeat();
     }
 
   /**
@@ -316,13 +316,28 @@ public class ConcreteGuiViewPanel extends JPanel {
       throw new IllegalStateException("Error: Given beat does not exist.");
     }
     ArrayList<Note> notes = new ArrayList<>();
-    for (Note n : notes) {
+    for (Note n : music) {
       int start = n.getStart();
       if (start == beat) {
         notes.add(n);
       }
     }
     return notes;
+  }
+
+  private List<Note> playBeat() throws IllegalStateException {
+    if (this.music.size() == 0) {
+      throw new IllegalStateException("Error: No notes have been added to the editor.");
+    }
+    ArrayList<Note> curBeats = new ArrayList<>();
+    for (Note n: this.music) {
+      if (n.getStart() == this.curBeat
+              || (n.getStart() < this.curBeat
+              && n.getStart() + n.getDuration() > this.curBeat)) {
+        curBeats.add(n);
+      }
+    }
+    return curBeats;
   }
 }
 
