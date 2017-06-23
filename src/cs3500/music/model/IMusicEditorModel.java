@@ -64,6 +64,13 @@ public interface IMusicEditorModel {
   List<String> getRange();
 
   /**
+   * Gets a List of Notes signifying the musical range.
+   *
+   * @return The range of the music
+   */
+  List<Note> getRangeNotes();
+
+  /**
    * Returns the length of the song in beats.
    *
    * @return The length of the song in beats
@@ -181,15 +188,6 @@ public interface IMusicEditorModel {
    * @throws IllegalStateException if no beats exist
    */
   int getBeat() throws IllegalStateException;
-
-  /**
-   * Gets the notes that begin at the given beat.
-   *
-   * @param beat The beat that the notes start at
-   * @return The notes beginning at the beat
-   * @throws IllegalStateException If the given beat is invalid or if the music is empty
-   */
-  List<Note> getNotesStartingAtBeat(int beat);
 
   /**
    * Gets the tempo of the music.

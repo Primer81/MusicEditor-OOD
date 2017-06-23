@@ -17,28 +17,6 @@ import java.util.List;
  * Utilizes a factory class to facilitate parsing view type from String input.
  */
 public interface IMusicEditorView {
-  /**
-   * Initializes some settings, such as visibility.
-   */
-  void initialize();
-
-  /**
-   * Adds the given keyboard listener to this view.
-   * @param listener the keyboard listener to be added
-   */
-  void addKeyListener(KeyListener listener);
-
-  /**
-   * Adds the given mouse listener to this view.
-   * @param listener the mouse listener to be added
-   */
-  void addMouseListener(MouseListener listener);
-
-  /**
-   * Adds the given meta event listener to this view.
-   * @param listener the meta event listener
-   */
-  void addMetaEventListener(MetaEventListener listener);
 
   /**
    * A method for the controller to pass the list of notes from the model to the view.
@@ -70,6 +48,29 @@ public interface IMusicEditorView {
   void setPaused(boolean paused);
 
   /**
+   * Adds the given keyboard listener to this view.
+   * @param listener the keyboard listener to be added
+   */
+  void addKeyListener(KeyListener listener);
+
+  /**
+   * Adds the given mouse listener to this view.
+   * @param listener the mouse listener to be added
+   */
+  void addMouseListener(MouseListener listener);
+
+  /**
+   * Adds the given meta event listener to this view.
+   * @param listener the meta event listener
+   */
+  void addMetaEventListener(MetaEventListener listener);
+
+  /**
+   * Initializes some settings, such as visibility.
+   */
+  void initialize();
+
+  /**
    * Returns whether the music editor is paused or not.
    * @return whether the player is paused
    */
@@ -84,6 +85,12 @@ public interface IMusicEditorView {
    * Pauses the music in the editor if it isn't already.
    */
   void pause();
+
+  /**
+   * Gets the current redline's x coordinate if there is one.
+   * @return
+   */
+  int getRedLineX();
 
   /**
    * Factory class for parsing view type from a String input.

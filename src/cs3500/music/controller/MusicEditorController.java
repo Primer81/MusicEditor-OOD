@@ -1,16 +1,17 @@
 package cs3500.music.controller;
 
 import cs3500.music.model.IMusicEditorModel;
+import cs3500.music.model.Note;
 import cs3500.music.view.IMusicEditorView;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
+
+import static java.awt.event.KeyEvent.VK_HOME;
 
 public class MusicEditorController {
   private IMusicEditorModel model;
@@ -58,17 +59,17 @@ public class MusicEditorController {
         this.view.pause();
       }
     });
-    keyTypes.put('s',() -> {
+
+    keyPresses.put(KeyEvent.VK_HOME,() -> {
       this.model.setBeat(0);
       this.view.setCurBeat(this.model.getBeat());
       this.view.setTickPosition(this.model.getBeat());
     });
-    keyTypes.put('e',() -> {
+    keyPresses.put(KeyEvent.VK_END,() -> {
       this.model.setBeat(this.model.getSongLength() - 1);
       this.view.setCurBeat(this.model.getBeat());
       this.view.setTickPosition(this.model.getBeat());
     });
-
     keyPresses.put(KeyEvent.VK_LEFT,() -> {
       if (this.model.hasPrev()) {
         this.model.prevBeat();
@@ -104,6 +105,29 @@ public class MusicEditorController {
     Stack<Point> points = new Stack<>();
 
     mouseClicks.put(MouseEvent.BUTTON1, () -> {
+      if (this.view.isPaused()) {
+        Point point = points.pop();
+        int redLineX = this.view.getRedLineX();
+        List<Note> range = this.model.getRangeNotes();
+        if (point.getX() >= redLineX
+            && point.getX() < redLineX + 20) {
+          int Yloc = 20 + range.size() * 20;
+          for (Note n: range) {
+            if (point.getY() < Yloc
+                && point.getY() >= Yloc - 20) {
+              n.setStart(this.model.getBeat());
+              this.model.addNote(n);
+              this.model.nextBeat();
+              this.view.setCurBeat(this.model.getBeat());
+              this.view.setMusic(this.model.getMusic());
+              break;
+            }
+            else {
+              Yloc -= 20;
+            }
+          }
+        }
+      }
     });
 
     MouseKeyListener mkl = new MouseKeyListener();

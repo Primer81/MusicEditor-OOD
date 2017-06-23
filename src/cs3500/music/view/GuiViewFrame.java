@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,12 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.swing.*;
 
 import cs3500.music.controller.KeyboardListener;
+import cs3500.music.controller.MouseKeyListener;
 import cs3500.music.model.Note;
 
 /**
- * A skeleton Frame (i.e., a window) in Swing
+ * The top level frame for the GUI. Displays the editor panel (ConcreteGuiViewPanel) and the
+ * Piano panel (PianoView).
  */
 public class GuiViewFrame extends JFrame implements IMusicEditorView {
   private ConcreteGuiViewPanel displayPanel;
@@ -76,6 +79,11 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   }
 
   @Override
+  public void addMouseListener(MouseListener listener) {
+    this.displayPanel.addMouseListener(listener);
+  }
+
+  @Override
   public void addMetaEventListener(MetaEventListener listener) {
     // does nothing
   }
@@ -110,6 +118,11 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   @Override
   public void pause() {
     this.paused = true;
+  }
+
+  @Override
+  public int getRedLineX() {
+    return this.displayPanel.getRedLineLoc();
   }
 
   @Override

@@ -78,6 +78,11 @@ public class TextualView extends JFrame implements IMusicEditorView {
     // do nothing
   }
 
+  @Override
+  public int getRedLineX() {
+    return 0; // does nothing
+  }
+
   /**
    * Returns the textual representation of the model's music.
    *

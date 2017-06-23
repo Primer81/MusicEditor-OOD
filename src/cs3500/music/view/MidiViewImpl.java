@@ -81,6 +81,7 @@ public class MidiViewImpl implements IMusicEditorView {
   @Override
   public void setMusic(List<Note> music) {
     this.music = music;
+    this.reSequence();
   }
 
   @Override
@@ -148,6 +149,11 @@ public class MidiViewImpl implements IMusicEditorView {
   public void pause() {
     this.sequencer.stop();
     this.paused = true;
+  }
+
+  @Override
+  public int getRedLineX() {
+    return 0; // does nothing
   }
 
   /**

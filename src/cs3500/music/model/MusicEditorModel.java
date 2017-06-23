@@ -224,6 +224,38 @@ public class MusicEditorModel implements IMusicEditorModel {
     return range;
   }
 
+  @Override
+  public ArrayList<Note> getRangeNotes() {
+    boolean validRange;
+    boolean greaterThanFirst;
+    boolean lessThanLast;
+
+    Note firstNote = this.firstOrLast(true);
+    int firstOctave = firstNote.getOctave();
+    Note lastNote = this.firstOrLast(false);
+    int lastOctave = lastNote.getOctave();
+    ArrayList<Note> range = new ArrayList<>();
+
+    for (int i = firstOctave; i <= lastOctave; i++) {
+      for (Pitch p : Pitch.values()) {
+        boolean notLastOctave = i != lastOctave;
+        greaterThanFirst = p.compareTo(firstNote.getPitch()) >= 0;
+        lessThanLast = p.compareTo(lastNote.getPitch()) <= 0;
+        if (i == firstOctave && i == lastOctave) {
+          validRange = greaterThanFirst && lessThanLast;
+        } else if (i == firstOctave) {
+          validRange = greaterThanFirst;
+        } else {
+          validRange = lessThanLast || notLastOctave;
+        }
+        if (validRange) {
+          range.add(new Note(1, i, 0, p, 1, 50));
+        }
+      }
+    }
+    return range;
+  }
+
   /**
    * Returns the first or last note in the music.
    *
@@ -383,24 +415,6 @@ public class MusicEditorModel implements IMusicEditorModel {
   @Override
   public int getTempo() {
     return this.tempo;
-  }
-
-  @Override
-  public ArrayList<Note> getNotesStartingAtBeat(int beat) {
-    if (this.music.isEmpty()) {
-      throw new IllegalStateException("Error: No beats exist.");
-    }
-    if (beat < 0 || beat > this.getSongLength() - 1) {
-      throw new IllegalStateException("Error: Given beat does not exist.");
-    }
-    ArrayList<Note> notes = new ArrayList<>();
-    for (Note n : music) {
-      int start = n.getStart();
-      if (start == beat) {
-        notes.add(n);
-      }
-    }
-    return notes;
   }
 
   /**

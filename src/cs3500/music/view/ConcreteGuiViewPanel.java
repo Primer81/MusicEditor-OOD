@@ -87,6 +87,14 @@ public class ConcreteGuiViewPanel extends JPanel {
   }
 
   /**
+   * Returns the redLineLoc so that the controller can know where it is on the GUI.
+   * @return the redLineloc
+   */
+  public int getRedLineLoc() {
+    return this.redLineLoc;
+  }
+
+  /**
    * Helper method. Draws the note heads and their bodies.
    *
    * @param g The graphics
