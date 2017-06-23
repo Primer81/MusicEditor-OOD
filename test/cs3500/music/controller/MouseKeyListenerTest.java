@@ -67,6 +67,4 @@ public class MouseKeyListenerTest {
             false, MouseEvent.BUTTON2));
     assertTrue(clicked == false);
   }
-
-
 }

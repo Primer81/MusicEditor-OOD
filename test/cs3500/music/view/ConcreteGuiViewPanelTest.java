@@ -34,6 +34,7 @@ public class ConcreteGuiViewPanelTest {
     model.addNote(a3);
     model.addNote(b4);
     model.addNote(c3);
+    this.concrete.setMusic(this.model.getMusic());
   }
 
   @Test

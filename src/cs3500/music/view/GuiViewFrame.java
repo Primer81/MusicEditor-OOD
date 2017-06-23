@@ -1,8 +1,6 @@
 package cs3500.music.view;
 
-import java.awt.Rectangle;
-import java.awt.GridLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -10,10 +8,7 @@ import java.util.List;
 
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import cs3500.music.model.Note;
 
@@ -37,6 +32,7 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     this.pianoViewPanel = new PianoView(this.displayPanel);
     this.scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants
         .VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    this.scrollPane.getViewport().setScrollMode(JViewport.BLIT_SCROLL_MODE);
     this.music = new ArrayList<>();
     this.curBeat = 0;
     this.paused = true;
@@ -53,6 +49,15 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     // does nothing
   }
 
+  /**
+   * In addition to setting the current beat, the GUI also sets the current beat of the
+   * display panel and redraws where the redline in the displayPanel used to be and
+   * where it is now. In addition, if the current beat becomes divisible by 50 and the
+   * editor is unpaused, then the viewport's view of the scroll pane will be moved to
+   * wherever the red line is. Otherwise, if the editor is paused, it will simply make the
+   * redline visible.
+   * @param curBeat the current beat
+   */
   @Override
   public void setCurBeat(int curBeat) {
     Rectangle oldRedLineRect = this.displayPanel.getRedLineRectangle();
@@ -61,6 +66,18 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     Rectangle newRedLineRect = this.displayPanel.getRedLineRectangle();
     this.displayPanel.repaint(new Rectangle(oldRedLineRect));
     this.displayPanel.repaint(new Rectangle(newRedLineRect));
+    if (this.curBeat % 50 == 0 && !this.isPaused()) {
+      Point viewPos = this.scrollPane.getViewport().getViewPosition();
+      viewPos.setLocation(this.displayPanel.getRedLineLoc() - 40, viewPos.y);
+      this.scrollPane.getViewport().setViewPosition(viewPos);
+      this.scrollPane.getViewport().getView().repaint();
+    }
+    else if (this.isPaused()) {
+      Point viewPos = this.scrollPane.getViewport().getViewPosition();
+      viewPos.setLocation(this.displayPanel.getRedLineLoc() - 45, viewPos.y);
+      this.scrollPane.getViewport().setViewPosition(viewPos);
+      this.scrollPane.getViewport().getView().repaint();
+    }
   }
 
   @Override
@@ -104,7 +121,6 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     scrollPane.getHorizontalScrollBar().setUnitIncrement(20);
     scrollPane.getVerticalScrollBar().setUnitIncrement(20);
     this.setVisible(true);
-    this.displayPanel.repaint();
   }
 
   @Override
