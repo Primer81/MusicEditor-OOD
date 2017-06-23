@@ -83,6 +83,7 @@ public class MusicEditorController {
     });
     keyPresses.put(KeyEvent.VK_END,() -> {
       this.model.setBeat(this.model.getSongLength() - 1);
+      this.view.setPaused(true);
       this.view.setCurBeat(this.model.getBeat());
       this.view.setTickPosition(this.model.getBeat());
     });

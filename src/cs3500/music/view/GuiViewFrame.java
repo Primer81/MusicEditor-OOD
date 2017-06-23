@@ -9,8 +9,10 @@ import java.util.List;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.*;
+import javax.swing.text.View;
 
 import cs3500.music.model.Note;
+import org.w3c.dom.css.Rect;
 
 /**
  * The top level frame for the GUI. Displays the editor panel (ConcreteGuiViewPanel) and the
@@ -52,10 +54,9 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   /**
    * In addition to setting the current beat, the GUI also sets the current beat of the
    * display panel and redraws where the redline in the displayPanel used to be and
-   * where it is now. In addition, if the current beat becomes divisible by 50 and the
-   * editor is unpaused, then the viewport's view of the scroll pane will be moved to
-   * wherever the red line is. Otherwise, if the editor is paused, it will simply make the
-   * redline visible.
+   * where it is now. In addition, if the redline goes to move offscreen, the viewport's
+   * view of the scroll pane will be moved to wherever the red line is. Otherwise, if the
+   * editor is paused, it will simply make the redline visible.
    * @param curBeat the current beat
    */
   @Override
@@ -66,14 +67,19 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     Rectangle newRedLineRect = this.displayPanel.getRedLineRectangle();
     this.displayPanel.repaint(new Rectangle(oldRedLineRect));
     this.displayPanel.repaint(new Rectangle(newRedLineRect));
-    if (this.curBeat % 50 == 0 && !this.isPaused()) {
-      Point viewPos = this.scrollPane.getViewport().getViewPosition();
+
+    JViewport viewport = this.scrollPane.getViewport();
+    Rectangle viewRect = viewport.getViewRect();
+    if (viewRect.getX() + viewRect.getWidth() <
+        this.displayPanel.getRedLineLoc() + 40
+        && !this.isPaused()) {
+      Point viewPos = viewport.getViewPosition();
       viewPos.setLocation(this.displayPanel.getRedLineLoc() - 40, viewPos.y);
       this.scrollPane.getViewport().setViewPosition(viewPos);
       this.scrollPane.getViewport().getView().repaint();
     }
     else if (this.isPaused()) {
-      Point viewPos = this.scrollPane.getViewport().getViewPosition();
+      Point viewPos = viewport.getViewPosition();
       viewPos.setLocation(this.displayPanel.getRedLineLoc() - 45, viewPos.y);
       this.scrollPane.getViewport().setViewPosition(viewPos);
       this.scrollPane.getViewport().getView().repaint();
