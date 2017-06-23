@@ -9,7 +9,10 @@ import javax.sound.midi.MidiUnavailableException;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * Controller for the Music Editor program. Allows key inputs to navigate the visual views as well
