@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1878bbfa-10bd-46ba-a06d-03e95c5b5c3f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/test/music_editor/cs3500/music/controller/KeyboardListenerTest$1.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/test/music_editor/cs3500/music/controller/KeyboardListenerTest$2.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/test/music_editor/cs3500/music/controller/KeyboardListenerTest.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/test/music_editor/cs3500/music/controller/MusicEditorControllerTest.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/cs3500/music/controller/KeyboardListenerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/music_editor_jar/music_editor.jar" afterPath="$PROJECT_DIR$/out/artifacts/music_editor_jar/music_editor.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/controller/KeyboardListener.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/controller/KeyboardListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/controller/MouseKeyListener.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/controller/MouseKeyListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/controller/MusicEditorController.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/controller/MusicEditorController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/ConcreteGuiViewPanel.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/ConcreteGuiViewPanel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/GuiViewFrame.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/GuiViewFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/IMusicEditorView$ReturnView.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/IMusicEditorView$ReturnView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/MidiViewImpl.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/MidiViewImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/TextualView.class" afterPath="$PROJECT_DIR$/out/production/music_editor/cs3500/music/view/TextualView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/test/music_editor/cs3500/music/controller/MusicEditorControllerTest.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,10 +54,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KeyboardListenerTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="KeyboardListenerTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/cs3500/music/controller/KeyboardListenerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
+            <state relative-caret-position="-413">
               <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -79,6 +65,31 @@
                 <element signature="e#672#673#0" expanded="true" />
                 <element signature="e#1070#1071#0" expanded="true" />
                 <element signature="e#1094#1095#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MouseKeyListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/cs3500/music/controller/MouseKeyListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MouseKeyListenerTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/cs3500/music/controller/MouseKeyListenerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1051">
+              <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+              <folding>
+                <element signature="e#685#686#0" expanded="true" />
+                <element signature="e#721#722#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -160,6 +171,7 @@
         <option value="$PROJECT_DIR$/test/cs3500/music/view/CompositeViewTest.java" />
         <option value="$PROJECT_DIR$/test/cs3500/music/controller/MusicEditorControllerTest.java" />
         <option value="$PROJECT_DIR$/test/cs3500/music/controller/KeyboardListenerTest.java" />
+        <option value="$PROJECT_DIR$/test/cs3500/music/controller/MouseKeyListenerTest.java" />
       </list>
     </option>
   </component>
@@ -445,33 +457,7 @@
       <recent name="C:\Users\Ian\IdeaProjects\music_editor\out\artifacts\music_editor_jar" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.KeyboardListenerTest.testRightArrow">
-    <configuration default="false" name="IMusicEditorViewTest.testInitMidi" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="cs3500.music.view.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="music_editor" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="cs3500.music.view" />
-      <option name="MAIN_CLASS_NAME" value="cs3500.music.view.IMusicEditorViewTest" />
-      <option name="METHOD_NAME" value="testInitMidi" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.MouseKeyListenerTest.testMouseClick">
     <configuration default="false" name="MusicEditor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -557,6 +543,32 @@
       <option name="PACKAGE_NAME" value="cs3500.music.controller" />
       <option name="MAIN_CLASS_NAME" value="cs3500.music.controller.KeyboardListenerTest" />
       <option name="METHOD_NAME" value="testSpace" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="MouseKeyListenerTest.testMouseClick" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="cs3500.music.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="music_editor" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="cs3500.music.controller" />
+      <option name="MAIN_CLASS_NAME" value="cs3500.music.controller.MouseKeyListenerTest" />
+      <option name="METHOD_NAME" value="testMouseClick" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -775,19 +787,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.IMusicEditorViewTest.testInitMidi" />
-      <item index="1" class="java.lang.String" itemvalue="Application.MusicEditor" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.CompositeViewTest.testIsPaused" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testRightArrow" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testSpace" />
+      <item index="0" class="java.lang.String" itemvalue="Application.MusicEditor" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.CompositeViewTest.testIsPaused" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testRightArrow" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testSpace" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.MouseKeyListenerTest.testMouseClick" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testRightArrow" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testSpace" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.CompositeViewTest.testIsPaused" />
-        <item index="3" class="java.lang.String" itemvalue="Application.MusicEditor" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.IMusicEditorViewTest.testInitMidi" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.MouseKeyListenerTest.testMouseClick" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testRightArrow" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.KeyboardListenerTest.testSpace" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.CompositeViewTest.testIsPaused" />
+        <item index="4" class="java.lang.String" itemvalue="Application.MusicEditor" />
       </list>
     </recent_temporary>
   </component>
@@ -805,18 +817,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompositeViewTest_testIsPaused - 2017.06.23 at 14h 43m 21s.xml">
-      <configuration name="CompositeViewTest.testIsPaused" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompositeViewTest_testIsPaused - 2017.06.23 at 14h 45m 07s.xml">
-      <configuration name="CompositeViewTest.testIsPaused" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompositeViewTest_testIsPaused - 2017.06.23 at 14h 45m 53s.xml">
-      <configuration name="CompositeViewTest.testIsPaused" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompositeViewTest_testIsPaused - 2017.06.23 at 14h 46m 33s.xml">
-      <configuration name="CompositeViewTest.testIsPaused" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CompositeViewTest_testIsPaused - 2017.06.23 at 14h 46m 57s.xml">
       <configuration name="CompositeViewTest.testIsPaused" configurationId="JUnit" />
     </history-entry>
@@ -835,10 +835,22 @@
     <history-entry file="KeyboardListenerTest_testSpace - 2017.06.23 at 15h 16m 19s.xml">
       <configuration name="KeyboardListenerTest.testSpace" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="MouseKeyListenerTest_testMouseClick - 2017.06.23 at 15h 37m 30s.xml">
+      <configuration name="MouseKeyListenerTest.testMouseClick" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MouseKeyListenerTest_testMouseClick - 2017.06.23 at 15h 38m 19s.xml">
+      <configuration name="MouseKeyListenerTest.testMouseClick" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MouseKeyListenerTest_testMouseClick - 2017.06.23 at 15h 39m 07s.xml">
+      <configuration name="MouseKeyListenerTest.testMouseClick" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MouseKeyListenerTest_testMouseClick - 2017.06.23 at 15h 40m 09s.xml">
+      <configuration name="MouseKeyListenerTest.testMouseClick" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1932" height="1038" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -849,13 +861,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973877" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973877" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -884,13 +896,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/cs3500/music/model/MusicEditorModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/cs3500/music/model/MusicEditorModelTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1276">
@@ -1023,16 +1028,6 @@
         <state relative-caret-position="308">
           <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/cs3500/music/controller/MouseKeyListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1249,7 +1244,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/cs3500/music/controller/KeyboardListenerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
+        <state relative-caret-position="-413">
           <caret line="24" column="34" lean-forward="false" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1257,6 +1252,27 @@
             <element signature="e#672#673#0" expanded="true" />
             <element signature="e#1070#1071#0" expanded="true" />
             <element signature="e#1094#1095#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cs3500/music/controller/MouseKeyListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/cs3500/music/controller/MouseKeyListenerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1051">
+          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding>
+            <element signature="e#685#686#0" expanded="true" />
+            <element signature="e#721#722#0" expanded="true" />
           </folding>
         </state>
       </provider>
