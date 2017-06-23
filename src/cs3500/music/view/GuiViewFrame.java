@@ -21,7 +21,6 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   private JPanel pianoViewPanel;
   private JScrollPane scrollPane;
   private List<Note> music;
-  private int tempo;
   private int curBeat;
   private boolean paused;
 
@@ -34,9 +33,8 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     this.scrollPane = new JScrollPane(displayPanel, ScrollPaneConstants
         .VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
     this.music = new ArrayList<>();
-    this.tempo = 1000;
-    this.paused = true;
     this.curBeat = 0;
+    this.paused = true;
   }
 
   @Override
@@ -47,14 +45,17 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
 
   @Override
   public void setTempo(int tempo) {
-    this.tempo = tempo;
+    // does nothing
   }
 
   @Override
   public void setCurBeat(int curBeat) {
+    Rectangle oldRedLineRect = this.displayPanel.getRedLineRectangle();
     this.curBeat = curBeat;
     this.displayPanel.setCurBeat(this.curBeat);
-    this.displayPanel.repaint();
+    Rectangle newRedLineRect = this.displayPanel.getRedLineRectangle();
+    this.displayPanel.repaint(new Rectangle(oldRedLineRect));
+    this.displayPanel.repaint(new Rectangle(newRedLineRect));
   }
 
   @Override
@@ -94,7 +95,6 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
     scrollPane.getVerticalScrollBar().setUnitIncrement(20);
     this.setVisible(true);
     this.displayPanel.repaint();
-    System.out.print(displayPanel.getNotesAtRedLine());
   }
 
   @Override
@@ -115,11 +115,5 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   @Override
   public Dimension getPreferredSize() {
     return new Dimension(1200, 1200);
-  }
-
-  @Override
-  public void display() {
-    initialize();
-    this.displayPanel.repaint();
   }
 }

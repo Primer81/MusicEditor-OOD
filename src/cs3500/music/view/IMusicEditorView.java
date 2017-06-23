@@ -17,12 +17,6 @@ import java.util.List;
  * Utilizes a factory class to facilitate parsing view type from String input.
  */
 public interface IMusicEditorView {
-
-  /**
-   * Displays the music, either visually or audibly.
-   */
-  void display() throws InvalidMidiDataException;
-
   /**
    * Initializes some settings, such as visibility.
    */

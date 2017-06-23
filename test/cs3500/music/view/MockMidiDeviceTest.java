@@ -56,7 +56,7 @@ public class MockMidiDeviceTest {
 
   @Test
   public void testMaryMidiTranscript() {
-    midiView.display();
+    midiView.initialize();
     assertEquals("Current note: 0 64 72 0 \n"
             + "Current note: 0 64 72 400000 \n"
             + "Current note: 0 55 70 0 \n"

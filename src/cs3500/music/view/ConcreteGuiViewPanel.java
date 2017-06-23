@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
@@ -67,27 +67,23 @@ public class ConcreteGuiViewPanel extends JPanel {
   }
 
   /**
-   * Moves the red line to the next beat.
-   */
-  public void nextBeat() {
-    this.curBeat += 1;
-    this.redLineLoc += this.BEAT_WIDTH;
-  }
-
-  /**
-   * Moves the red line to the previous beat.
-   */
-  public void prevBeat() {
-    this.curBeat += 1;
-    this.redLineLoc -= this.BEAT_WIDTH;
-  }
-
-  /**
    * Sets the current beat and moves the red line to the new beat.
    */
   public void setCurBeat(int curBeat) {
     this.curBeat = curBeat;
     this.redLineLoc = (this.BEAT_WIDTH + this.SIDE_WIDTH + 5) + this.BEAT_WIDTH * this.curBeat;
+  }
+
+  /**
+   * Returns a rectangle specifying the location of the redline in the form of a rectangle
+   * so that the repaint method can simply repaint the redline instead of repainting the
+   * entire composition.
+   * @return the rectangle location of the redline
+   */
+  public Rectangle getRedLineRectangle() {
+    ArrayList<String> range = this.getRange();
+    return new Rectangle(this.redLineLoc, this.NOTE_HEIGHT, redLineLoc,
+        this.NOTE_HEIGHT + this.NOTE_HEIGHT * range.size());
   }
 
   /**

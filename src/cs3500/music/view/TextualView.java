@@ -213,9 +213,4 @@ public class TextualView extends JFrame implements IMusicEditorView {
     }
     return length;
   }
-
-  @Override
-  public void display() {
-    // does nothing
-  }
 }

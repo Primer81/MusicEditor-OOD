@@ -188,9 +188,4 @@ public class MidiViewImpl implements IMusicEditorView {
     }
     return notes;
   }
-
-  @Override
-  public void display() {
-    // nothing to display
-  }
 }

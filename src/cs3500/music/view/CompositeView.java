@@ -117,8 +117,4 @@ public class CompositeView implements IMusicEditorView {
     this.gui.pause();
     this.midi.pause();
   }
-
-  @Override
-  public void display() {
-  }
 }
