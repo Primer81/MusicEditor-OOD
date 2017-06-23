@@ -111,9 +111,9 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   @Override
   public void initialize() {
     this.setResizable(true);
-    this.setLayout(new GridLayout(2, 1));
-    this.add(this.scrollPane);
-    this.add(this.pianoViewPanel);
+    this.setLayout(new BorderLayout());
+    this.add(this.scrollPane, BorderLayout.CENTER);
+    this.add(this.pianoViewPanel, BorderLayout.SOUTH);
     this.setTitle("Music Editor");
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     this.pack();

@@ -1,8 +1,6 @@
 package cs3500.music.view;
 
-import java.awt.Rectangle;
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +35,11 @@ public class PianoView extends JPanel {
     repaint();
   }
 
+  @Override
+  public Dimension getPreferredSize() {
+    return new Dimension(18 * 70, 200);
+  }
+
   /**
    * Helper method. Draws the keyboard.
    *
@@ -56,7 +59,7 @@ public class PianoView extends JPanel {
       pitch = temp % 12;
       octave = temp / 12;
       blackPitch = i % 7;
-      key = new Rectangle(i * 20 + 20, 100, 18, 200);
+      key = new Rectangle(i * 20 + 0, 0, 18, 200);
       Note tempNote = new Note(1, octave, 0, Pitch.values()[pitch], 0 , 0);
       keyMap.put(tempNote, key);
       g.setColor(Color.white);
@@ -70,7 +73,7 @@ public class PianoView extends JPanel {
         pitch = temp % 12;
         octave = temp / 12;
         Note tempNote2 = new Note(1, octave, 0, Pitch.values()[pitch], 0 , 0);
-        key = new Rectangle(i * 20 + 35, 100, 9, 90);
+        key = new Rectangle(i * 20 + 15, 0, 9, 90);
         keyMap.put(tempNote2, key);
         g.setColor(Color.black);
         g.drawRect(key.x, key.y,9, 90);
