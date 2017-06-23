@@ -1,12 +1,8 @@
 package cs3500.music.view;
 
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
-import cs3500.music.controller.KeyboardListener;
-import cs3500.music.controller.MouseKeyListener;
-import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 import cs3500.music.model.Pitch;
 

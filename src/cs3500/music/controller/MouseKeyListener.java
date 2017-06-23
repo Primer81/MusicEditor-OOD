@@ -1,9 +1,8 @@
 package cs3500.music.controller;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
 

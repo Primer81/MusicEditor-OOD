@@ -1,21 +1,18 @@
 package cs3500.music.view;
 
-import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 
-import cs3500.music.controller.KeyboardListener;
-import cs3500.music.controller.MouseKeyListener;
-import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 
 /**
- * View that provides an audible view synced up with a visual view.
+ * View that provides an audible view synced up with a visual view. The red line of the visual
+ * portion moves along with the beat of the audible portion.
  */
 public class CompositeView implements IMusicEditorView {
 
@@ -26,6 +23,9 @@ public class CompositeView implements IMusicEditorView {
   private Integer curBeat;
   private Boolean paused;
 
+  /**
+   * Constructs a CompositeView.
+   */
   public CompositeView() throws MidiUnavailableException {
     this.gui = new GuiViewFrame();
     this.midi = new MidiViewImpl();

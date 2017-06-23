@@ -1,7 +1,8 @@
 package cs3500.music.view;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.Rectangle;
+import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -9,10 +10,11 @@ import java.util.List;
 
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
-import cs3500.music.controller.KeyboardListener;
-import cs3500.music.controller.MouseKeyListener;
 import cs3500.music.model.Note;
 
 /**

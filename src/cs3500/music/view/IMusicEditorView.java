@@ -1,13 +1,10 @@
 package cs3500.music.view;
 
-import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MidiUnavailableException;
 
-import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 
-import java.awt.Point;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -88,7 +85,7 @@ public interface IMusicEditorView {
 
   /**
    * Gets the current redline's x coordinate if there is one.
-   * @return
+   * @return The redline's x coordinate, if applicable
    */
   int getRedLineX();
 

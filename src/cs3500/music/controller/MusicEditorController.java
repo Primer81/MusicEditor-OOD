@@ -11,17 +11,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
 
-import static java.awt.event.KeyEvent.VK_HOME;
-
+/**
+ * Controller for the Music Editor program. Allows key inputs to navigate the visual views as well
+ * as play/pause the audio portions of the views. Can add new notes to the compositions through
+ * mouse selection.
+ */
 public class MusicEditorController {
   private IMusicEditorModel model;
   private IMusicEditorView view;
 
+  /**
+   * Constructs a MusicEditorController.
+   *
+   * @param m The model
+   */
   public MusicEditorController(IMusicEditorModel m)
   {
     model = m;
   }
 
+  /**
+   * Sets the view for the controller and displays it.
+   * @param v The view
+   * @throws InvalidMidiDataException If there is any invalid MIDI data
+   */
   public void setView(IMusicEditorView v) throws InvalidMidiDataException {
     view = v;
     v.setMusic(this.model.getMusic());

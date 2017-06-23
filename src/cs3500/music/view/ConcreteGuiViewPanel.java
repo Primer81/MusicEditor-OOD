@@ -9,11 +9,8 @@ import java.util.List;
 
 import javax.swing.*;
 
-import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
 import cs3500.music.model.Pitch;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * Class that renders everything for the top half of the GUI view (everything except the keyboard).
@@ -68,6 +65,8 @@ public class ConcreteGuiViewPanel extends JPanel {
 
   /**
    * Sets the current beat and moves the red line to the new beat.
+   *
+   * @param curBeat The new current beat
    */
   public void setCurBeat(int curBeat) {
     this.curBeat = curBeat;
@@ -329,6 +328,12 @@ public class ConcreteGuiViewPanel extends JPanel {
     return notes;
   }
 
+  /**
+   * Plays the notes at the current beat.
+   *
+   * @return The notes playing at the current beat
+   * @throws IllegalStateException If the music is empty
+   */
   private List<Note> playBeat() throws IllegalStateException {
     if (this.music.size() == 0) {
       throw new IllegalStateException("Error: No notes have been added to the editor.");
