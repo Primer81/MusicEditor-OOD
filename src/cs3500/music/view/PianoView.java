@@ -37,7 +37,7 @@ public class PianoView extends JPanel {
 
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension(18 * 70, 200);
+    return new Dimension(20 * 71, 200);
   }
 
   /**
