@@ -60,7 +60,7 @@ public class PianoView extends JPanel {
       octave = temp / 12;
       blackPitch = i % 7;
       key = new Rectangle(i * 20 + 0, 0, 18, 200);
-      Note tempNote = new Note(1, octave, 0, Pitch.values()[pitch], 0 , 0);
+      Note tempNote = new Note(1, octave, 0, Pitch.values()[pitch], 1, 0);
       keyMap.put(tempNote, key);
       g.setColor(Color.white);
       g.fillRect(key.x, key.y, 18, 200);
@@ -72,8 +72,8 @@ public class PianoView extends JPanel {
         temp++;
         pitch = temp % 12;
         octave = temp / 12;
-        Note tempNote2 = new Note(1, octave, 0, Pitch.values()[pitch], 0 , 0);
-        key = new Rectangle(i * 20 + 15, 0, 9, 90);
+        Note tempNote2 = new Note(1, octave, 0, Pitch.values()[pitch], 1, 0);
+        key = new Rectangle(i * 20 + 15, 0, 5, 90);
         keyMap.put(tempNote2, key);
         g.setColor(Color.black);
         g.drawRect(key.x, key.y,9, 90);

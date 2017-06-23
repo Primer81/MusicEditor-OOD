@@ -100,7 +100,7 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
 
   @Override
   public void addMouseListener(MouseListener listener) {
-    this.displayPanel.addMouseListener(listener);
+    this.pianoViewPanel.addMouseListener(listener);
   }
 
   @Override

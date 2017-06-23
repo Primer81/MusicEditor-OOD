@@ -2,11 +2,12 @@ package cs3500.music.controller;
 
 import cs3500.music.model.IMusicEditorModel;
 import cs3500.music.model.Note;
+import cs3500.music.model.Pitch;
 import cs3500.music.view.IMusicEditorView;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -124,23 +125,37 @@ public class MusicEditorController {
     mouseClicks.put(MouseEvent.BUTTON1, () -> {
       if (this.view.isPaused()) {
         Point point = points.pop();
-        int redLineX = this.view.getRedLineX();
-        List<Note> range = this.model.getRangeNotes();
-        if (point.getX() >= redLineX
-            && point.getX() < redLineX + 20) {
-          int Yloc = 20 + range.size() * 20;
-          for (Note n: range) {
-            if (point.getY() < Yloc
-                && point.getY() >= Yloc - 20) {
-              n.setStart(this.model.getBeat());
-              this.model.addNote(n);
+        int pitch;
+        int octave;
+        int blackPitch;
+        int temp = -1;
+
+        for (int i = 0; i < 70; i++) {
+          temp++;
+          pitch = temp % 12;
+          octave = temp / 12;
+          blackPitch = i % 7;
+          Note tempNote = new Note(1, octave, this.model.getBeat(), Pitch.values()[pitch], 1, 50);
+          if (point.x > i * 20 && point.x < (i + 1) * 20
+              && !(point.x > i * 20 + 15 && point.y < 90)) {
+            this.model.addNote(tempNote);
+            this.model.nextBeat();
+            this.view.setMusic(this.model.getMusic());
+            this.view.setCurBeat(this.model.getBeat());
+            break;
+          }
+          if (blackPitch == 0 || blackPitch == 1 || blackPitch == 3 || blackPitch == 4 || blackPitch
+              == 5) {
+            temp++;
+            pitch = temp % 12;
+            octave = temp / 12;
+            tempNote = new Note(1, octave, this.model.getBeat(), Pitch.values()[pitch], 1, 50);
+            if (point.x > i * 20 + 15 && point.x < (i + 1) * 20 && point.y < 90) {
+              this.model.addNote(tempNote);
               this.model.nextBeat();
-              this.view.setCurBeat(this.model.getBeat());
               this.view.setMusic(this.model.getMusic());
+              this.view.setCurBeat(this.model.getBeat());
               break;
-            }
-            else {
-              Yloc -= 20;
             }
           }
         }
