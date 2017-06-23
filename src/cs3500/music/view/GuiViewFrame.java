@@ -70,17 +70,12 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
 
     JViewport viewport = this.scrollPane.getViewport();
     Rectangle viewRect = viewport.getViewRect();
-    if (viewRect.getX() + viewRect.getWidth() <
+    if ((viewRect.getX() + viewRect.getWidth() <
         this.displayPanel.getRedLineLoc() + 40
-        && !this.isPaused()) {
+        && !this.isPaused())
+        || this.isPaused()) {
       Point viewPos = viewport.getViewPosition();
       viewPos.setLocation(this.displayPanel.getRedLineLoc() - 40, viewPos.y);
-      this.scrollPane.getViewport().setViewPosition(viewPos);
-      this.scrollPane.getViewport().getView().repaint();
-    }
-    else if (this.isPaused()) {
-      Point viewPos = viewport.getViewPosition();
-      viewPos.setLocation(this.displayPanel.getRedLineLoc() - 45, viewPos.y);
       this.scrollPane.getViewport().setViewPosition(viewPos);
       this.scrollPane.getViewport().getView().repaint();
     }
