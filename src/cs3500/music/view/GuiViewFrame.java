@@ -140,11 +140,6 @@ public class GuiViewFrame extends JFrame implements IMusicEditorView {
   }
 
   @Override
-  public int getRedLineX() {
-    return this.displayPanel.getRedLineLoc();
-  }
-
-  @Override
   public Dimension getPreferredSize() {
     return new Dimension(20 * 71, 1000);
   }

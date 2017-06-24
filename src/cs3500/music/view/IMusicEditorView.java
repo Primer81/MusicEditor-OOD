@@ -84,12 +84,6 @@ public interface IMusicEditorView {
   void pause();
 
   /**
-   * Gets the current redline's x coordinate if there is one.
-   * @return The redline's x coordinate, if applicable
-   */
-  int getRedLineX();
-
-  /**
    * Factory class for parsing view type from a String input.
    */
   class ReturnView {

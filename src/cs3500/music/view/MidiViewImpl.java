@@ -160,11 +160,6 @@ public class MidiViewImpl implements IMusicEditorView {
     this.paused = true;
   }
 
-  @Override
-  public int getRedLineX() {
-    return 0; // does nothing
-  }
-
   /**
    * Gets how many beats long the music is.
    * @return number of beats
